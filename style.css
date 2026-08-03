@@ -43,6 +43,15 @@ a, button {
   font-family: inherit;
 }
 
+a,
+button,
+input,
+textarea,
+select,
+label {
+    cursor: none;
+}
+
 .pink {
   color: var(--pink);
 }
@@ -234,6 +243,33 @@ section {
   color: var(--muted);
   line-height: 1.7;
   max-width: 1104px;
+
+    opacity: .75;
+  transition:
+    opacity .35s ease,
+    color .35s ease,
+    transform .35s ease,
+    text-shadow .35s ease;
+}
+
+.about p:hover {
+  opacity: 1;
+  color: #fff;
+  transform: translateY(-2px);
+  text-shadow:
+    0 0 10px rgba(255,255,255,.15),
+    0 0 20px rgba(255,0,85,.15);
+}
+
+.about h2 {
+  transition:
+    transform .35s cubic-bezier(.2,.8,.2,1),
+    text-shadow .35s ease;
+}
+
+.about h2:hover {
+  transform: translateY(-4px);
+  text-shadow: 0 0 18px rgba(255,0,85,.35);
 }
 
 .stats {
