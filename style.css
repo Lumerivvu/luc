@@ -749,33 +749,6 @@ footer {
     height: 12px;
   }
 
-  /* Mobile mockup only shows the MIKE watermark, not LUKOMSKIY */
-  .wm-lukomskiy {
-    display: none;
-  }
-
-  .wm-mike {
-    top: -25vw;
-    left: 50%;
-    width: 100vw;
-    transform: translateX(-50%);
-    font-size: 118vw;
-    line-height: 0.6546;
-    white-space: normal;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    text-align: center;
-  }
-
-  .wm-about {
-    top: 14vw;
-    font-size: 86vw;
-  }
-
-  .wm-tools {
-    top: 6vw;
-    font-size: 86vw;
-  }
 
   /* ---------- About ---------- */
   .about {
