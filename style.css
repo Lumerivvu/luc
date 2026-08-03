@@ -136,6 +136,39 @@ section {
   padding: 60px 24px 160px;
 }
 
+.btn-contact {
+  transition:
+    transform .35s cubic-bezier(.2,.8,.2,1),
+    box-shadow .35s ease,
+    background .35s ease;
+}
+
+.btn-contact:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow:
+    0 0 18px rgba(255,255,255,.08),
+    0 0 35px rgba(255,0,85,.25);
+}
+
+.btn-contact:hover .label {
+  text-shadow: 0 0 10px rgba(255,255,255,.2);
+}
+
+.btn-contact .circle {
+  transition:
+    transform .35s cubic-bezier(.2,.8,.2,1),
+    background .35s ease,
+    box-shadow .35s ease;
+}
+
+.btn-contact:hover .circle {
+  background: var(--pink);
+  transform: rotate(45deg);
+  box-shadow:
+    0 0 12px rgba(255,0,85,.5),
+    0 0 24px rgba(255,0,85,.25);
+}
+
 .hero .content {
   position: relative;
   z-index: 2;
@@ -475,6 +508,20 @@ section {
 .tools h2 {
   font-size: 3.3333vw;
   font-weight: 600;
+}
+
+.tools h2 {
+  transition:
+    transform .35s cubic-bezier(.2,.8,.2,1),
+    text-shadow .35s ease,
+    color .35s ease;
+}
+
+.tools h2:hover {
+  transform: translateY(-4px);
+  text-shadow:
+    0 0 10px rgba(255,255,255,.15),
+    0 0 20px rgba(255,0,85,.25);
 }
 
 .tools-grid {
@@ -1047,7 +1094,7 @@ button:focus-visible {
 }
 
 .loaded .btn-contact {
-  animation: heroUp .8s cubic-bezier(.2,.9,.2,1) .85s forwards;
+  animation: heroUp .8s cubic-bezier(.2,.9,.2,1) .85s both;
 }
 
 @keyframes heroUp {

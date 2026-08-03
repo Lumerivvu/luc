@@ -202,10 +202,13 @@ window.addEventListener("scroll", () => {
   }
 }, { passive: true });
 
-// =======================
-// PAGE LOAD
-// =======================
 
 window.addEventListener("load", () => {
   document.body.classList.add("loaded");
+
+  const btn = document.querySelector(".btn-contact");
+
+  btn.addEventListener("animationend", () => {
+    btn.style.animation = "";
+  });
 });
