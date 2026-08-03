@@ -700,6 +700,14 @@ footer {
 ========================================================= */
 @media (max-width: 640px) {
 
+  /* ---------- Watermarks ---------- */
+.wm-lukomskiy,
+.wm-mike,
+.wm-about,
+.wm-tools {
+    display: none;
+}
+
   /* ---------- Hero ---------- */
   .hero {
     padding: 96px 24px 64px;
