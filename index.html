@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lukomskiy — UI/UX &amp; Web Designer</title>
+  <title>LMPage</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,9 +18,6 @@
 
   <main>
 
-    <!-- ============================== -->
-    <!-- HERO                           -->
-    <!-- ============================== -->
     <section class="hero" id="hero">
       <div class="wm-lukomskiy watermark">LUKOMSKIY</div>
       <div class="wm-mike watermark">MIKE</div>
@@ -44,9 +41,6 @@
       </div>
     </section>
 
-    <!-- ============================== -->
-    <!-- ABOUT                          -->
-    <!-- ============================== -->
     <section class="about" id="about">
       <div class="wm-about watermark">ABOUT</div>
 
@@ -83,9 +77,6 @@
       </div>
     </section>
 
-    <!-- ============================== -->
-    <!-- DESIGN PHILOSOPHY              -->
-    <!-- ============================== -->
     <section class="philosophy" id="philosophy">
       <div class="container">
         <div class="phil-headings">
@@ -112,10 +103,7 @@
       </div>
     </section>
 
-    <!-- ============================== -->
-    <!-- TOOLS / CONTACT                -->
-    <!-- ============================== -->
-    <section class="tools">
+    <section class="tools" id="tools">
       <div class="wm-tools watermark">TOOLS</div>
 
       <div class="container">
@@ -172,9 +160,7 @@
       </div>
     </section>
 
-    <!-- ============================== -->
-    <!-- CONTACT                        -->
-    <!-- ============================== -->
+
     <section class="contact-block" id="contact">
       <div class="container">
         <h2>Let's <span class="pink">Talk.</span></h2>
@@ -199,6 +185,37 @@
   </main>
 
   <footer>© 2026 Lukomskiy — UI/UX &amp; Web Designer</footer>
+
+  <nav class="dock-nav" id="dockNav" aria-label="Section navigation">
+    <a href="#hero" class="dock-link" data-section="hero" aria-label="Home">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 9.5 10 3l7 6.5M5 8v9h4v-5h2v5h4V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <a href="#about" class="dock-link" data-section="about" aria-label="About">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="6.5" r="3.3" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M3.5 17c1-3.6 4-5.5 6.5-5.5s5.5 1.9 6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </a>
+    <a href="#philosophy" class="dock-link" data-section="philosophy" aria-label="Philosophy">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 2.5a5 5 0 0 0-3 9c.6.5 1 1.2 1 2v.5h4V13.5c0-.8.4-1.5 1-2a5 5 0 0 0-3-9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M8.3 17.5h3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </a>
+    <a href="#tools" class="dock-link" data-section="tools" aria-label="Tools">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.5 3.5a4 4 0 0 0-5.4 4.9L3 13.5 5 15.5l5.1-5.1a4 4 0 0 0 4.9-5.4l-2.6 2.6-2-2 2.6-2.6Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <a href="#contact" class="dock-link" data-section="contact" aria-label="Contact">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2.5" y="5" width="15" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M3 6l7 5 7-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </nav>
 
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="script.js"></script>

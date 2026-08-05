@@ -202,6 +202,57 @@ window.addEventListener("scroll", () => {
   }
 }, { passive: true });
 
+// =======================
+// DOCK NAVIGATION
+// =======================
+
+const dockNav = document.getElementById("dockNav");
+const dockLinks = document.querySelectorAll(".dock-link");
+const heroSection = document.getElementById("hero");
+const navSections = ["hero", "about", "philosophy", "tools", "contact"]
+  .map(id => document.getElementById(id))
+  .filter(Boolean);
+
+// Only show the dock once the hero (which already has its own
+// Contact me button) has scrolled out of view — keeps the first
+// screen uncluttered.
+const dockVisibilityObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    dockNav.classList.toggle("visible", !entry.isIntersecting);
+  });
+}, {
+  threshold: 0,
+  rootMargin: "-40% 0px -40% 0px"
+});
+
+if (heroSection) dockVisibilityObserver.observe(heroSection);
+
+// Highlight whichever section currently owns the middle of the viewport.
+const activeSectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    const id = entry.target.id;
+    dockLinks.forEach(link => {
+      link.classList.toggle("active", link.dataset.section === id);
+    });
+  });
+}, {
+  threshold: 0,
+  rootMargin: "-45% 0px -45% 0px"
+});
+
+navSections.forEach(section => activeSectionObserver.observe(section));
+
+dockLinks.forEach(link => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const target = document.getElementById(link.dataset.section);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+});
 
 window.addEventListener("load", () => {
   document.body.classList.add("loaded");

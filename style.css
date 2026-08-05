@@ -21,6 +21,8 @@
 
 html {
   scroll-behavior: auto;
+  overflow-x: hidden;
+  touch-action: pan-y;
 }
 
 body {
@@ -28,6 +30,7 @@ body {
   color: #fff;
   font-family: 'Montserrat', sans-serif;
   overflow-x: hidden;
+  touch-action: pan-y;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -688,6 +691,98 @@ section {
 }
 
 /* =========================================================
+   DOCK NAVIGATION
+   Floating bottom pill with section shortcuts. Hidden by
+   default and only slides in once the hero is scrolled past
+   (toggled via the .visible class from JS) — showing it over
+   the hero would just duplicate the Contact me button and
+   clutter the first thing visitors see.
+========================================================= */
+.dock-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 200;
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  background: rgba(15, 15, 15, 0.6);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, 20px);
+  transition:
+    opacity .45s cubic-bezier(.2,.8,.2,1),
+    transform .45s cubic-bezier(.2,.8,.2,1),
+    visibility 0s linear .45s;
+}
+
+.dock-nav.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+  transition:
+    opacity .45s cubic-bezier(.2,.8,.2,1),
+    transform .45s cubic-bezier(.2,.8,.2,1),
+    visibility 0s linear 0s;
+}
+
+.dock-link {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.55);
+  transition:
+    color .3s ease,
+    background .3s ease,
+    transform .3s cubic-bezier(.2,.8,.2,1);
+}
+
+.dock-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.dock-link:hover {
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+.dock-link.active {
+  color: #fff;
+  background: var(--pink);
+  box-shadow: 0 0 16px rgba(255, 0, 85, .45);
+}
+
+@media (max-width: 640px) {
+  .dock-nav {
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    gap: 4px;
+    padding: 6px;
+  }
+
+  .dock-link {
+    width: 40px;
+    height: 40px;
+  }
+
+  .dock-link svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* =========================================================
    FOOTER
 ========================================================= */
 footer {
@@ -783,13 +878,53 @@ footer {
 ========================================================= */
 @media (max-width: 640px) {
 
-  /* ---------- Watermarks ---------- */
-.wm-lukomskiy,
-.wm-mike,
-.wm-about,
-.wm-tools {
-    display: none;
-}
+  /* ---------- Watermarks ----------
+     Font-size/line-height/box-width ratios below are taken from the
+     Figma mobile mockup (÷ frame width 393px, expressed as vw). At
+     that size a single line can't fit mobile screens, so — same as
+     the mockup — the box is made wider than the viewport and
+     word-break:break-word wraps the word onto multiple lines
+     naturally instead of us hardcoding <br> tags.
+     Centering stays on the standard left:50%/translateX(-50%) from
+     the base .watermark rule (inherited, not overridden here) —
+     the scroll-parallax script always re-applies that -50% on every
+     scroll, so a custom left/transform here would get clobbered the
+     moment the page scrolls. */
+
+  .wm-lukomskiy {
+    display: none; /* not present in the mobile mockup */
+  }
+
+  .wm-mike,
+  .wm-about,
+  .wm-tools {
+    display: block;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+  }
+
+  .wm-mike {
+    top: -25vw;
+    width: 195vw;
+    font-size: 118vw;
+    line-height: 0.95;
+  }
+
+  .wm-about {
+    top: 14vw;
+    width: 147vw;
+    font-size: 86.2vw;
+    line-height: 1;
+  }
+
+  .wm-tools {
+    top: 6vw;
+    width: 147vw;
+    font-size: 86.2vw;
+    line-height: 1;
+  }
 
   /* ---------- Hero ---------- */
   .hero {
