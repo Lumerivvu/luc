@@ -20,7 +20,7 @@ document.getElementById('contact-btn').addEventListener('click', function () {
 // =======================
 
 const revealTargets = document.querySelectorAll(
-  '.about .content, .philosophy .container, .tools .heading-wrap, .tools-grid, .stats, .contact-block .container'
+  '.about .content, .philosophy .container, .tools .heading-wrap, .tools-grid, .stats, .work .heading-wrap, .work-list, .contact-block .container'
 );
 
 revealTargets.forEach(el => {
@@ -209,7 +209,7 @@ window.addEventListener("scroll", () => {
 const dockNav = document.getElementById("dockNav");
 const dockLinks = document.querySelectorAll(".dock-link");
 const heroSection = document.getElementById("hero");
-const navSections = ["hero", "about", "philosophy", "tools", "contact"]
+const navSections = ["hero", "about", "philosophy", "tools", "work", "contact"]
   .map(id => document.getElementById(id))
   .filter(Boolean);
 

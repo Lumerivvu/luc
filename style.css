@@ -109,6 +109,22 @@ section {
   color: transparent;
 }
 
+.wm-contact{
+    top: 6vw;
+    font-size: 32.442vw;
+    background: linear-gradient(
+        180deg,
+        rgba(0,0,0,.14) 20%,
+        rgba(255,0,85,.16) 52%,
+        rgba(0,0,0,.14) 90%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+
 .wm-about {
   top: 25vw;
   font-size: 32.442vw;
@@ -120,9 +136,18 @@ section {
 }
 
 .wm-tools {
-  top: 6vw;
+  top: -25vw;
   font-size: 32.442vw;
   background: linear-gradient(180deg, rgba(0,0,0,0.14) 20%, rgba(255,0,85,0.16) 52%, rgba(0,0,0,0.14) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.wm-work {
+  top: 8vw;
+  font-size: 32.442vw;
+  background: linear-gradient(185deg, rgba(255,255,255,0.05) 35%, rgba(0,0,0,0.05) 90%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -144,13 +169,6 @@ section {
     transform .35s cubic-bezier(.2,.8,.2,1),
     box-shadow .35s ease,
     background .35s ease;
-}
-
-.btn-contact:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow:
-    0 0 18px rgba(255,255,255,.08),
-    0 0 35px rgba(255,0,85,.25);
 }
 
 .btn-contact:hover .label {
@@ -216,12 +234,14 @@ section {
 }
 
 .btn-contact:hover {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 10px 30px rgba(255,0,85,0.25);
+  transform: translateY(-6px) scale(1.06);
+  box-shadow:
+    0 0 18px rgba(255,255,255,.08),
+    0 14px 34px rgba(255,0,85,0.3);
 }
 
 .btn-contact:active {
-  transform: translateY(-1px) scale(0.99);
+  transform: translateY(-2px) scale(1.01);
 }
 
 .btn-contact .label {
@@ -604,6 +624,108 @@ section {
 }
 
 /* =========================================================
+   WORK
+========================================================= */
+.work {
+  padding-top: 10vw;
+  padding-bottom: 10vw;
+}
+
+.work > .container > .heading-wrap {
+  text-align: center;
+  margin-bottom: 4vw;
+}
+
+.work-subtitle{
+    max-width: 700px;
+    margin: 1.6vw auto 4vw;
+    text-align: center;
+    font-size: 1.2vw;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.work h2 {
+  font-size: 3.3333vw;
+  font-weight: 600;
+}
+
+.work-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.work-item {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+  padding: 2vw 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  color: #fff;
+  transition: padding-left .35s cubic-bezier(.2,.8,.2,1);
+}
+
+.work-item:hover {
+  padding-left: 1vw;
+}
+
+.work-index {
+  font-size: 1.1vw;
+  color: var(--muted);
+  flex-shrink: 0;
+  width: 2.5vw;
+}
+
+.work-name {
+  font-size: 2vw;
+  font-weight: 600;
+  flex: 1;
+  transition: color .35s ease;
+}
+
+.work-item:hover .work-name {
+  color: var(--pink);
+}
+
+
+.work-tags {
+  font-size: 1vw;
+  color: var(--muted);
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.work-arrow {
+  width: 3vw;
+  height: 3vw;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition:
+    transform .35s cubic-bezier(.2,.8,.2,1),
+    background .35s ease,
+    border-color .35s ease;
+}
+
+.work-arrow svg {
+  width: 35%;
+  height: 35%;
+}
+
+.work-item:hover .work-arrow {
+  background: var(--pink);
+  border-color: var(--pink);
+  transform: rotate(45deg);
+}
+
+/* =========================================================
    CONTACT
 ========================================================= */
 .contact-block {
@@ -835,7 +957,7 @@ footer {
 @media (max-width: 1279px) {
   .hero h1 { font-size: clamp(30px, 3.6vw, 42px); }
   .hero .subtitle { font-size: clamp(15px, 1.5vw, 18px); }
-  .about h2, .tools h2 { font-size: clamp(26px, 3.6vw, 40px); }
+  .about h2, .tools h2, .work h2 { font-size: clamp(26px, 3.6vw, 40px); }
   .about p, .phil-texts p, .tool-group .item { font-size: clamp(14px, 1.5vw, 18px); }
   .stat .num { font-size: clamp(26px, 3.6vw, 40px); }
   .stat .label { font-size: clamp(13px, 1.5vw, 17px); }
@@ -844,6 +966,9 @@ footer {
   .contact-block h2 { font-size: clamp(26px, 3.6vw, 40px); }
   .contact-item .contact-label { font-size: clamp(11px, 1.1vw, 13px); }
   .contact-item .contact-value { font-size: clamp(14px, 1.5vw, 18px); }
+  .work-name { font-size: clamp(20px, 3vw, 30px); }
+  .work-index { font-size: clamp(12px, 1.4vw, 15px); width: 32px; }
+  .work-tags { font-size: clamp(11px, 1.2vw, 14px); }
 }
 
 /* =========================================================
@@ -897,7 +1022,8 @@ footer {
 
   .wm-mike,
   .wm-about,
-  .wm-tools {
+  .wm-tools,
+  .wm-work {
     display: block;
     white-space: normal;
     word-break: break-word;
@@ -921,6 +1047,13 @@ footer {
 
   .wm-tools {
     top: 6vw;
+    width: 147vw;
+    font-size: 86.2vw;
+    line-height: 1;
+  }
+
+  .wm-work {
+    top: 8vw;
     width: 147vw;
     font-size: 86.2vw;
     line-height: 1;
@@ -1134,6 +1267,52 @@ footer {
 
   .tool-group .item {
     font-size: 14px;
+  }
+
+  /* ---------- Work ---------- */
+  .work {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+
+  .work > .container > .heading-wrap {
+    margin-bottom: 32px;
+  }
+
+  .work h2 {
+    font-size: clamp(30px, 11vw, 40px);
+  }
+
+  .work-item {
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    padding: 20px 0;
+  }
+
+  .work-item:hover {
+    padding-left: 0;
+  }
+
+  .work-index {
+    font-size: 12px;
+    width: auto;
+    order: 1;
+  }
+
+  .work-name {
+    font-size: 22px;
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .work-tags {
+    font-size: 12px;
+    order: 2;
+    margin-left: auto;
+  }
+
+  .work-arrow {
+    display: none;
   }
 
   /* ---------- Contact ---------- */
