@@ -136,7 +136,7 @@ section {
 }
 
 .wm-tools {
-  top: -25vw;
+  top: 6vw;
   font-size: 32.442vw;
   background: linear-gradient(180deg, rgba(0,0,0,0.14) 20%, rgba(255,0,85,0.16) 52%, rgba(0,0,0,0.14) 90%);
   -webkit-background-clip: text;
@@ -162,13 +162,6 @@ section {
   align-items: center;
   justify-content: center;
   padding: 60px 24px 160px;
-}
-
-.btn-contact {
-  transition:
-    transform .35s cubic-bezier(.2,.8,.2,1),
-    box-shadow .35s ease,
-    background .35s ease;
 }
 
 .btn-contact:hover .label {
@@ -229,7 +222,10 @@ section {
   padding: 0 8px 0 28px;
   cursor: none;
   gap: 24px;
-  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
+  transition:
+    transform .35s cubic-bezier(.2,.8,.2,1),
+    box-shadow .35s ease,
+    background .35s ease;
   box-shadow: 0 0 0 rgba(255,0,85,0);
 }
 
@@ -292,6 +288,9 @@ section {
   font-size: 3.3333vw;
   font-weight: 600;
   margin-bottom: 2.8vw;
+  transition:
+    transform .35s cubic-bezier(.2,.8,.2,1),
+    text-shadow .35s ease;
 }
 
 .about p {
@@ -317,12 +316,6 @@ section {
     0 0 20px rgba(255,0,85,.15);
 }
 
-.about h2 {
-  transition:
-    transform .35s cubic-bezier(.2,.8,.2,1),
-    text-shadow .35s ease;
-}
-
 .about h2:hover {
   transform: translateY(-4px);
   text-shadow: 0 0 18px rgba(255,0,85,.35);
@@ -345,23 +338,6 @@ section {
 .stat:nth-child(2) { grid-column: 4; text-align: right; }
 .stat:nth-child(3) { grid-column: 2; text-align: left; }
 .stat:nth-child(4) { grid-column: 3; text-align: right; }
-
-.stat .num {
-  font-size: 3.3333vw;
-  font-weight: 600;
-  color: var(--pink);
-  transition: transform .3s ease;
-}
-
-.stat:hover .num {
-  transform: translateY(-4px);
-}
-
-.stat .label {
-  font-style: italic;
-  font-size: 1.2vw;
-  color: var(--muted);
-}
 
 /* =========================================================
    PHILOSOPHY
@@ -446,18 +422,12 @@ section {
   line-height: 1.7;
   flex: 1 1 320px;
   max-width: 583px;
+  opacity: .75;
   transition:
+    opacity .35s ease,
     color .35s ease,
     transform .35s ease,
     text-shadow .35s ease;
-}
-
-.phil-texts p:hover {
-  color: #fff;
-  transform: translateY(-2px);
-  text-shadow:
-    0 0 10px rgba(255,255,255,.15),
-    0 0 20px rgba(255,0,85,.15);
 }
 
 .phil-headings h2 {
@@ -471,29 +441,6 @@ section {
   transform: translateY(-4px);
 }
 
-.tool-group {
-  transition:
-    transform .35s,
-    filter .35s;
-}
-
-.tool-group:hover {
-  transform: translateY(-8px);
-}
-
-.tool-group:hover .title {
-  color: #fff;
-  text-shadow:
-    0 0 18px rgba(255,0,85,.5);
-}
-
-.phil-texts p {
-  opacity: .75;
-  transition:
-    opacity .35s ease,
-    color .35s ease;
-}
-
 .phil-texts:hover p {
   opacity: .35;
 }
@@ -501,14 +448,10 @@ section {
 .phil-texts p:hover {
   opacity: 1;
   color: #fff;
-}
-
-.phil-texts p {
-  font-size: 1.2vw;
-  color: var(--muted);
-  line-height: 1.7;
-  flex: 1 1 320px;
-  max-width: 583px;
+  transform: translateY(-2px);
+  text-shadow:
+    0 0 10px rgba(255,255,255,.15),
+    0 0 20px rgba(255,0,85,.15);
 }
 
 .phil-texts .right {
@@ -531,9 +474,6 @@ section {
 .tools h2 {
   font-size: 3.3333vw;
   font-weight: 600;
-}
-
-.tools h2 {
   transition:
     transform .35s cubic-bezier(.2,.8,.2,1),
     text-shadow .35s ease,
@@ -558,6 +498,19 @@ section {
   display: flex;
   flex-direction: column;
   gap: 2.3vw;
+  transition:
+    transform .35s,
+    filter .35s;
+}
+
+.tool-group:hover {
+  transform: translateY(-8px);
+}
+
+.tool-group:hover .title {
+  color: #fff;
+  text-shadow:
+    0 0 18px rgba(255,0,85,.5);
 }
 .tool-group .items {
   display: flex;
@@ -672,14 +625,14 @@ section {
 }
 
 .work-index {
-  font-size: 1.1vw;
+  font-size: 1vw;
   color: var(--muted);
   flex-shrink: 0;
   width: 2.5vw;
 }
 
 .work-name {
-  font-size: 2vw;
+  font-size: 1.6667vw;
   font-weight: 600;
   flex: 1;
   transition: color .35s ease;
@@ -734,7 +687,7 @@ section {
 }
 
 .contact-block h2 {
-  font-size: 2.6vw;
+  font-size: 3.3333vw;
   font-weight: 600;
 }
 
@@ -966,8 +919,8 @@ footer {
   .contact-block h2 { font-size: clamp(26px, 3.6vw, 40px); }
   .contact-item .contact-label { font-size: clamp(11px, 1.1vw, 13px); }
   .contact-item .contact-value { font-size: clamp(14px, 1.5vw, 18px); }
-  .work-name { font-size: clamp(20px, 3vw, 30px); }
-  .work-index { font-size: clamp(12px, 1.4vw, 15px); width: 32px; }
+  .work-name { font-size: clamp(16px, 1.8vw, 21px); }
+  .work-index { font-size: clamp(11px, 1.2vw, 14px); width: 32px; }
   .work-tags { font-size: clamp(11px, 1.2vw, 14px); }
 }
 
@@ -1023,7 +976,8 @@ footer {
   .wm-mike,
   .wm-about,
   .wm-tools,
-  .wm-work {
+  .wm-work,
+  .wm-contact {
     display: block;
     white-space: normal;
     word-break: break-word;
@@ -1054,6 +1008,13 @@ footer {
 
   .wm-work {
     top: 8vw;
+    width: 147vw;
+    font-size: 86.2vw;
+    line-height: 1;
+  }
+
+  .wm-contact {
+    top: 6vw;
     width: 147vw;
     font-size: 86.2vw;
     line-height: 1;

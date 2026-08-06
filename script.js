@@ -9,10 +9,15 @@ const isTouchDevice = matchMedia("(hover: none) and (pointer: coarse)").matches;
 // =======================
 
 document.getElementById('contact-btn').addEventListener('click', function () {
-  document.getElementById('contact').scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
-  });
+  const target = document.getElementById('contact');
+  if (typeof lenis !== 'undefined') {
+    lenis.scrollTo(target, {
+      lock: true,
+      onComplete: () => lenis.resize()
+    });
+  } else {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 });
 
 // =======================
@@ -108,6 +113,16 @@ function raf(time) {
 
 requestAnimationFrame(raf);
 
+// Keep Lenis's cached document/viewport dimensions in sync — without
+// this, its internal scroll limit can drift out of date (mobile browser
+// chrome resizing the viewport, fonts/content loading in, etc.), which
+// shows up as scroll feeling like it "can't quite reach" the top/bottom.
+let resizeTimeout;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => lenis.resize(), 150);
+});
+
 // =======================
 // STATS ANIMATION
 // =======================
@@ -181,6 +196,12 @@ const watermarks = document.querySelectorAll(".watermark");
 
 let parallaxTicking = false;
 
+// Cap how far any layer can drift. Without this, offset grows with the
+// raw page scroll position forever — on a long page, the last watermark
+// (highest speed, furthest down the page) can end up displaced far
+// enough to slide out of its own section by the time you reach it.
+const PARALLAX_MAX_OFFSET = 120;
+
 function updateParallax() {
   const scroll = window.scrollY;
 
@@ -188,8 +209,13 @@ function updateParallax() {
     // скорость для каждого слоя
     const speed = 0.08 + index * 0.04;
 
+    const offset = Math.max(
+      -PARALLAX_MAX_OFFSET,
+      Math.min(PARALLAX_MAX_OFFSET, scroll * speed)
+    );
+
     wm.style.transform =
-      `translate3d(-50%, ${scroll * speed}px, 0)`;
+      `translate3d(-50%, ${offset}px, 0)`;
   });
 
   parallaxTicking = false;
@@ -249,7 +275,14 @@ dockLinks.forEach(link => {
     e.preventDefault();
     const target = document.getElementById(link.dataset.section);
     if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (typeof lenis !== 'undefined') {
+        lenis.scrollTo(target, {
+          lock: true,
+          onComplete: () => lenis.resize()
+        });
+      } else {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
   });
 });
