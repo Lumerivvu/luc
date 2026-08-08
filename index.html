@@ -285,6 +285,17 @@ clarity, usability and modern visual design.
     </a>
   </nav>
 
+  <div class="key-hint" id="keyHint" aria-hidden="true">
+    <div class="key-hint-ring-wrap">
+      <svg class="key-hint-ring" viewBox="0 0 48 48" width="48" height="48">
+        <circle class="key-hint-ring-bg" cx="24" cy="24" r="20"></circle>
+        <circle class="key-hint-ring-fg" id="keyHintRing" cx="24" cy="24" r="20"></circle>
+      </svg>
+      <span class="key-hint-num" id="keyHintNum">1</span>
+    </div>
+    <span class="key-hint-label" id="keyHintLabel">Hold to jump to Home</span>
+  </div>
+
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="script.js"></script>
 </body>

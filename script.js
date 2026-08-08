@@ -1,12 +1,6 @@
-// =======================
-// DEVICE DETECTION
-// =======================
-
 const isTouchDevice = matchMedia("(hover: none) and (pointer: coarse)").matches;
 
-// =======================
-// CONTACT BUTTON SCROLL
-// =======================
+
 
 document.getElementById('contact-btn').addEventListener('click', function () {
   const target = document.getElementById('contact');
@@ -20,9 +14,7 @@ document.getElementById('contact-btn').addEventListener('click', function () {
   }
 });
 
-// =======================
-// REVEAL ON SCROLL
-// =======================
+
 
 const revealTargets = document.querySelectorAll(
   '.about .content, .philosophy .container, .tools .heading-wrap, .tools-grid, .stats, .work .heading-wrap, .work-list, .contact-block .container'
@@ -48,56 +40,61 @@ const io = new IntersectionObserver((entries) => {
 
 revealTargets.forEach(el => io.observe(el));
 
-// =======================
-// CUSTOM CURSOR
-// =======================
+
+// Cursor lerp + watermark parallax used to each run their own independent
+// requestAnimationFrame (or scroll-event-driven rAF) loop on top of Lenis's
+// own raf loop. Three concurrent rAF callbacks fighting for the same frame
+// budget is a common source of visible jank/lag, especially on lower-end
+// devices. They're folded into the single raf() loop below instead, so the
+// whole page only ever schedules one rAF callback per frame.
+
+let cursorEl = null;
+let cursorMouseX = 0;
+let cursorMouseY = 0;
+let cursorCurrentX = 0;
+let cursorCurrentY = 0;
+let cursorHasMoved = false;
 
 if (!isTouchDevice) {
-  const cursor = document.querySelector(".cursor");
-
-  let mouseX = 0;
-  let mouseY = 0;
-
-  let currentX = 0;
-  let currentY = 0;
+  cursorEl = document.querySelector(".cursor");
 
   document.addEventListener("mousemove", (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  function animateCursor() {
-    currentX += (mouseX - currentX) * 0.15;
-    currentY += (mouseY - currentY) * 0.15;
-
-    cursor.style.transform =
-      `translate(${currentX}px, ${currentY}px) translate(-50%, -50%)`;
-
-    requestAnimationFrame(animateCursor);
-  }
-
-  animateCursor();
+    cursorMouseX = e.clientX;
+    cursorMouseY = e.clientY;
+    if (!cursorHasMoved) {
+      // Snap to the initial position instead of lerping in from (0,0).
+      cursorCurrentX = cursorMouseX;
+      cursorCurrentY = cursorMouseY;
+      cursorHasMoved = true;
+    }
+  }, { passive: true });
 
   const hoverItems = document.querySelectorAll("a, button");
 
   hoverItems.forEach(item => {
     item.addEventListener("mouseenter", () => {
-      cursor.style.width = "28px";
-      cursor.style.height = "28px";
-      cursor.style.borderColor = "#ff0055";
+      cursorEl.style.width = "28px";
+      cursorEl.style.height = "28px";
+      cursorEl.style.borderColor = "#ff0055";
     });
 
     item.addEventListener("mouseleave", () => {
-      cursor.style.width = "18px";
-      cursor.style.height = "18px";
-      cursor.style.borderColor = "rgba(255,255,255,.6)";
+      cursorEl.style.width = "18px";
+      cursorEl.style.height = "18px";
+      cursorEl.style.borderColor = "rgba(255,255,255,.6)";
     });
   });
 }
 
-// =======================
-// SMOOTH SCROLL (LENIS)
-// =======================
+function updateCursor() {
+  if (!cursorEl || !cursorHasMoved) return;
+
+  cursorCurrentX += (cursorMouseX - cursorCurrentX) * 0.25;
+  cursorCurrentY += (cursorMouseY - cursorCurrentY) * 0.25;
+
+  cursorEl.style.transform =
+    `translate(${cursorCurrentX}px, ${cursorCurrentY}px) translate(-50%, -50%)`;
+}
 
 const lenis = new Lenis({
   duration: 1.2,
@@ -108,24 +105,21 @@ const lenis = new Lenis({
 
 function raf(time) {
   lenis.raf(time);
+  updateCursor();
+  updateParallax();
   requestAnimationFrame(raf);
 }
 
 requestAnimationFrame(raf);
 
-// Keep Lenis's cached document/viewport dimensions in sync — without
-// this, its internal scroll limit can drift out of date (mobile browser
-// chrome resizing the viewport, fonts/content loading in, etc.), which
-// shows up as scroll feeling like it "can't quite reach" the top/bottom.
+
 let resizeTimeout;
 window.addEventListener("resize", () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(() => lenis.resize(), 150);
 });
 
-// =======================
-// STATS ANIMATION
-// =======================
+
 
 const stats = document.querySelectorAll(".stat");
 
@@ -133,10 +127,7 @@ const statsObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
 
-    // Animate in the order the stats actually appear on screen, not raw
-    // DOM order — the mobile layout reorders them with CSS `order`, so
-    // sorting by position keeps the cascade reading top-to-bottom there
-    // too, same as it already reads left-to-right/diagonal on desktop.
+
     const orderedStats = [...stats].sort((a, b) => {
       const rectA = a.getBoundingClientRect();
       const rectB = b.getBoundingClientRect();
@@ -188,25 +179,23 @@ function animateNumber(el) {
   update();
 }
 
-// =======================
-// WATERMARK PARALLAX
-// =======================
+
 
 const watermarks = document.querySelectorAll(".watermark");
 
-let parallaxTicking = false;
-
-// Cap how far any layer can drift. Without this, offset grows with the
-// raw page scroll position forever — on a long page, the last watermark
-// (highest speed, furthest down the page) can end up displaced far
-// enough to slide out of its own section by the time you reach it.
 const PARALLAX_MAX_OFFSET = 120;
+let lastParallaxScroll = -1;
 
+// Called every frame from the shared raf() loop (see above) instead of
+// from its own scroll listener + rAF pair. Skipping the work when the
+// scroll position hasn't changed since the last frame avoids pointless
+// style writes while the page is idle.
 function updateParallax() {
   const scroll = window.scrollY;
+  if (scroll === lastParallaxScroll) return;
+  lastParallaxScroll = scroll;
 
   watermarks.forEach((wm, index) => {
-    // скорость для каждого слоя
     const speed = 0.08 + index * 0.04;
 
     const offset = Math.max(
@@ -217,20 +206,7 @@ function updateParallax() {
     wm.style.transform =
       `translate3d(-50%, ${offset}px, 0)`;
   });
-
-  parallaxTicking = false;
 }
-
-window.addEventListener("scroll", () => {
-  if (!parallaxTicking) {
-    requestAnimationFrame(updateParallax);
-    parallaxTicking = true;
-  }
-}, { passive: true });
-
-// =======================
-// DOCK NAVIGATION
-// =======================
 
 const dockNav = document.getElementById("dockNav");
 const dockLinks = document.querySelectorAll(".dock-link");
@@ -239,9 +215,7 @@ const navSections = ["hero", "about", "philosophy", "tools", "work", "contact"]
   .map(id => document.getElementById(id))
   .filter(Boolean);
 
-// Only show the dock once the hero (which already has its own
-// Contact me button) has scrolled out of view — keeps the first
-// screen uncluttered.
+
 const dockVisibilityObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     dockNav.classList.toggle("visible", !entry.isIntersecting);
@@ -253,7 +227,6 @@ const dockVisibilityObserver = new IntersectionObserver((entries) => {
 
 if (heroSection) dockVisibilityObserver.observe(heroSection);
 
-// Highlight whichever section currently owns the middle of the viewport.
 const activeSectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
@@ -285,6 +258,106 @@ dockLinks.forEach(link => {
       }
     }
   });
+});
+
+// =======================
+// KEYBOARD HOLD-TO-NAVIGATE
+// =======================
+
+const KEY_HOLD_DURATION = 450; // ms — how long a number key must be held
+const RING_CIRCUMFERENCE = 2 * Math.PI * 20; // matches the r=20 circle in the SVG
+
+const keySectionMap = {
+  '1': { id: 'hero', label: 'Home' },
+  '2': { id: 'about', label: 'About' },
+  '3': { id: 'philosophy', label: 'Philosophy' },
+  '4': { id: 'tools', label: 'Tools' },
+  '5': { id: 'work', label: 'Work' },
+  '6': { id: 'contact', label: 'Contact' },
+};
+
+const keyHint = document.getElementById('keyHint');
+const keyHintRing = document.getElementById('keyHintRing');
+const keyHintNum = document.getElementById('keyHintNum');
+const keyHintLabel = document.getElementById('keyHintLabel');
+
+let activeHoldKey = null;
+let holdTimeoutId = null;
+
+function isTypingContext() {
+  const el = document.activeElement;
+  return !!el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+}
+
+function showKeyHint(key, sectionInfo) {
+  keyHintNum.textContent = key;
+  keyHintLabel.textContent = `Hold to jump to ${sectionInfo.label}`;
+
+  // Reset the ring instantly, then kick off the fill animation via a
+  // plain CSS transition — simpler and smoother than driving it with
+  // requestAnimationFrame, and it naturally stays in sync since both
+  // use the same KEY_HOLD_DURATION.
+  keyHintRing.style.transition = 'none';
+  keyHintRing.style.strokeDashoffset = RING_CIRCUMFERENCE;
+  void keyHintRing.getBoundingClientRect(); // force reflow before re-enabling the transition
+  keyHintRing.style.transition = `stroke-dashoffset ${KEY_HOLD_DURATION}ms linear`;
+  keyHintRing.style.strokeDashoffset = '0';
+
+  keyHint.classList.add('visible');
+}
+
+function hideKeyHint() {
+  keyHint.classList.remove('visible');
+  keyHintRing.style.transition = 'none';
+  keyHintRing.style.strokeDashoffset = RING_CIRCUMFERENCE;
+}
+
+function jumpToSection(id) {
+  const target = document.getElementById(id);
+  if (!target) return;
+
+  if (typeof lenis !== 'undefined') {
+    lenis.scrollTo(target, {
+      lock: true,
+      onComplete: () => lenis.resize()
+    });
+  } else {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+window.addEventListener('keydown', (e) => {
+  if (e.repeat || isTypingContext()) return;
+
+  const sectionInfo = keySectionMap[e.key];
+  if (!sectionInfo || activeHoldKey) return;
+
+  activeHoldKey = e.key;
+  showKeyHint(e.key, sectionInfo);
+
+  holdTimeoutId = setTimeout(() => {
+    jumpToSection(sectionInfo.id);
+    hideKeyHint();
+    activeHoldKey = null;
+  }, KEY_HOLD_DURATION);
+});
+
+window.addEventListener('keyup', (e) => {
+  if (e.key !== activeHoldKey) return;
+
+  clearTimeout(holdTimeoutId);
+  hideKeyHint();
+  activeHoldKey = null;
+});
+
+// Safety net: if focus leaves the window mid-hold (alt-tab etc.), the
+// keyup never fires — cancel cleanly so the hint doesn't get stuck.
+window.addEventListener('blur', () => {
+  if (activeHoldKey) {
+    clearTimeout(holdTimeoutId);
+    hideKeyHint();
+    activeHoldKey = null;
+  }
 });
 
 window.addEventListener("load", () => {

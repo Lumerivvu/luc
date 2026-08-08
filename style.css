@@ -1,6 +1,3 @@
-/* =========================================================
-   ROOT VARIABLES
-========================================================= */
 :root {
   --pink: #ff0055;
   --white: #ffffff;
@@ -10,9 +7,7 @@
   --container-pad: 24px;
 }
 
-/* =========================================================
-   RESET / BASE
-========================================================= */
+
 * {
   margin: 0;
   padding: 0;
@@ -34,8 +29,33 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  min-width: 320px; /* smallest supported width — layout stops shrinking below this instead of breaking */
+  min-width: 320px; 
   cursor: none;
+}
+
+/* Fades the oversized watermark text as it bleeds toward the viewport
+   edges, so it tapers into the background instead of hard-cutting
+   right where the scrollbar sits (which reads as a stray stripe). Sits
+   above the watermarks (z-index 0) but below real content (z-index 2). */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: clamp(70px, 9vw, 220px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+body::before {
+  left: 0;
+  background: linear-gradient(to right, #000 0%, #000 35%, transparent 100%);
+}
+
+body::after {
+  right: 0;
+  background: linear-gradient(to left, #000 0%, #000 35%, transparent 100%);
 }
 
 main {
@@ -63,7 +83,7 @@ section {
   position: relative;
 }
 
-/* Shared content container — every section aligns to this */
+
 .container {
   position: relative;
   z-index: 2;
@@ -71,9 +91,7 @@ section {
   margin: 0 auto;
 }
 
-/* =========================================================
-   WATERMARKS
-========================================================= */
+
 .watermark {
   position: absolute;
   left: 50%;
@@ -85,14 +103,13 @@ section {
   user-select: none;
   line-height: 1;
   will-change: transform;
-  transition: transform .08s linear;
 }
 
 .wm-lukomskiy {
   top: 3vw;
   font-size: 18.433vw;
   letter-spacing: 0.3686vw;
-  background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(90,90,90,0.07) 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(90,90,90,0.1) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -102,8 +119,8 @@ section {
 .wm-mike {
   top: 19vw;
   font-size: 41.269vw;
-  /* background: linear-gradient(185deg, rgba(255,255,255,0.09) 35%, rgba(0,0,0,0.09) 90%); */
-  background: linear-gradient(180deg, rgba(0,0,0,0.16) 20%, rgba(255,0,85,0.13) 52%, rgba(0,0,0,0.16) 90%);
+
+  background: linear-gradient(180deg, rgba(0,0,0,0.16) 20%, rgba(255,0,85,0.18) 52%, rgba(0,0,0,0.16) 90%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -129,7 +146,7 @@ section {
   top: 25vw;
   font-size: 32.442vw;
   /* background: linear-gradient(180deg, rgba(0,0,0,0.14) 20%, rgba(255,0,85,0.16) 52%, rgba(0,0,0,0.14) 90%); */
-  background: linear-gradient(185deg, rgba(255,255,255,0.05) 35%, rgba(0,0,0,0.05) 90%);
+  background: linear-gradient(185deg, rgba(255,255,255,0.07) 35%, rgba(0,0,0,0.07) 90%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -153,9 +170,7 @@ section {
   color: transparent;
 }
 
-/* =========================================================
-   HERO
-========================================================= */
+
 .hero {
   min-height: 100vh;
   display: flex;
@@ -209,7 +224,7 @@ section {
   font-weight: 400;
 }
 
-/* .hero .subtitle .pink { font-weight: 500; } */
+
 
 .btn-contact {
   position: relative;
@@ -269,9 +284,7 @@ section {
   height: 13px;
 }
 
-/* =========================================================
-   ABOUT
-========================================================= */
+
 .about {
   padding-top: 1vw;
   padding-bottom: 11vw;
@@ -339,9 +352,7 @@ section {
 .stat:nth-child(3) { grid-column: 2; text-align: left; }
 .stat:nth-child(4) { grid-column: 3; text-align: right; }
 
-/* =========================================================
-   PHILOSOPHY
-========================================================= */
+
 .philosophy {
   padding: 10vw 0;
 }
@@ -375,7 +386,7 @@ section {
 .phil-headings .right {
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* выравнивание по правому краю */
+  align-items: flex-end;
   text-align: right;
   margin-left: auto;
 }
@@ -458,9 +469,7 @@ section {
   text-align: justify;
 }
 
-/* =========================================================
-   TOOLS
-========================================================= */
+
 .tools {
   padding-top: 10vw;
   padding-bottom: 12vw;
@@ -540,7 +549,7 @@ section {
 .tg-html { grid-column: 2; text-align: left; align-items: flex-start; }
 .tg-css { grid-column: 4; text-align: right; align-items: flex-end; }
 
-/* Индивидуальные смещения колонок */
+
 .tg-figma {
   grid-column: 1;
   align-items: flex-start;
@@ -576,9 +585,7 @@ section {
   margin-top: 0;
 }
 
-/* =========================================================
-   WORK
-========================================================= */
+
 .work {
   padding-top: 10vw;
   padding-bottom: 10vw;
@@ -589,18 +596,43 @@ section {
   margin-bottom: 4vw;
 }
 
-.work-subtitle{
-    max-width: 700px;
-    margin: 1.6vw auto 4vw;
-    text-align: center;
-    font-size: 1.2vw;
-    color: var(--muted);
-    line-height: 1.7;
+.work-subtitle {
+  max-width: 700px;
+  margin: 1.6vw auto 4vw;
+  text-align: center;
+  font-size: 1.2vw;
+  color: var(--muted);
+  line-height: 1.7;
+  opacity: .75;
+  transition:
+    opacity .35s ease,
+    color .35s ease,
+    transform .35s ease,
+    text-shadow .35s ease;
+}
+
+.work-subtitle:hover {
+  opacity: 1;
+  color: #fff;
+  transform: translateY(-2px);
+  text-shadow:
+    0 0 10px rgba(255,255,255,.15),
+    0 0 20px rgba(255,0,85,.15);
 }
 
 .work h2 {
   font-size: 3.3333vw;
   font-weight: 600;
+  transition:
+    transform .35s cubic-bezier(.2,.8,.2,1),
+    text-shadow .35s ease;
+}
+
+.work h2:hover {
+  transform: translateY(-4px);
+  text-shadow:
+    0 0 10px rgba(255,255,255,.15),
+    0 0 20px rgba(255,0,85,.25);
 }
 
 .work-list {
@@ -678,9 +710,6 @@ section {
   transform: rotate(45deg);
 }
 
-/* =========================================================
-   CONTACT
-========================================================= */
 .contact-block {
   padding: 6vw 0 8vw;
   text-align: center;
@@ -689,6 +718,16 @@ section {
 .contact-block h2 {
   font-size: 3.3333vw;
   font-weight: 600;
+  transition:
+    transform .35s cubic-bezier(.2,.8,.2,1),
+    text-shadow .35s ease;
+}
+
+.contact-block h2:hover {
+  transform: translateY(-4px);
+  text-shadow:
+    0 0 10px rgba(255,255,255,.15),
+    0 0 20px rgba(255,0,85,.25);
 }
 
 .contact-list {
@@ -705,7 +744,7 @@ section {
   align-items: center;
   gap: 0.6vw;
   text-decoration: none;
-  transition: transform .3s ease;
+  transition: transform .35s ease;
 }
 
 .contact-item:hover {
@@ -723,16 +762,13 @@ section {
   font-size: 1.2vw;
   color: #fff;
   font-weight: 500;
-  transition: color .3s ease;
+  transition: color .35s ease;
 }
 
 .contact-item:hover .contact-value {
   color: var(--pink);
 }
 
-/* =========================================================
-   CURSOR
-========================================================= */
 .cursor {
   position: fixed;
   left: 0;
@@ -752,9 +788,6 @@ section {
     background .2s;
 }
 
-/* =========================================================
-   SELECTION
-========================================================= */
 ::selection {
   background: rgba(255, 0, 85, 0.75);
   color: #fff;
@@ -766,13 +799,65 @@ section {
 }
 
 /* =========================================================
-   DOCK NAVIGATION
-   Floating bottom pill with section shortcuts. Hidden by
-   default and only slides in once the hero is scrolled past
-   (toggled via the .visible class from JS) — showing it over
-   the hero would just duplicate the Contact me button and
-   clutter the first thing visitors see.
+   NON-SELECTABLE TEXT
+   Headings, labels, and other UI "chrome" don't need to be
+   text-selectable — leaving them selectable just invites
+   accidental highlighting on click-drag and looks less
+   polished. Actual copy (paragraphs, phone/email you'd want
+   to copy) is intentionally left out of this list.
 ========================================================= */
+h1, h2,
+.subtitle,
+.stat .num,
+.stat .label,
+.tool-group .title,
+.tool-group .item,
+.work-index,
+.work-name,
+.work-tags,
+.contact-item .contact-label,
+.btn-contact .label,
+.dock-link,
+.key-hint-num,
+.key-hint-label,
+footer {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* =========================================================
+   SCROLLBAR
+   Styled to match the dark theme so the browser's native
+   scrollbar (some OS/browser combos auto-show it on mouse
+   movement) doesn't read as a mismatched stripe against the
+   black background.
+========================================================= */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  border: 2px solid #000;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 0, 85, 0.5);
+  background-clip: padding-box;
+}
+
+
 .dock-nav {
   position: fixed;
   left: 50%;
@@ -782,8 +867,8 @@ section {
   gap: 6px;
   padding: 8px;
   background: rgba(15, 15, 15, 0.6);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 50px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
@@ -839,7 +924,114 @@ section {
   box-shadow: 0 0 16px rgba(255, 0, 85, .45);
 }
 
+/* =========================================================
+   KEY HINT (hold 1-6 to jump to a section)
+========================================================= */
+.key-hint {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 22px 8px 8px;
+  background: rgba(15, 15, 15, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(.92);
+  transition:
+    opacity .2s ease,
+    transform .2s ease,
+    visibility 0s linear .2s;
+}
+
+.key-hint.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+  transition:
+    opacity .2s ease,
+    transform .2s ease,
+    visibility 0s linear 0s;
+}
+
+.key-hint-ring-wrap {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.key-hint-ring {
+  transform: rotate(-90deg);
+}
+
+.key-hint-ring-bg,
+.key-hint-ring-fg {
+  fill: none;
+  stroke-width: 3;
+}
+
+.key-hint-ring-bg {
+  stroke: rgba(255, 255, 255, .15);
+}
+
+.key-hint-ring-fg {
+  stroke: var(--pink);
+  stroke-linecap: round;
+  stroke-dasharray: 125.6637;
+  stroke-dashoffset: 125.6637;
+}
+
+.key-hint-num {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.key-hint-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, .85);
+  white-space: nowrap;
+}
+
 @media (max-width: 640px) {
+  .key-hint {
+    left: 50%;
+    right: auto;
+    max-width: calc(100vw - 48px);
+    padding: 6px 18px 6px 6px;
+    gap: 10px;
+  }
+
+  .key-hint-ring-wrap {
+    width: 40px;
+    height: 40px;
+  }
+
+  .key-hint-label {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 640px) {
+  body::before,
+  body::after {
+    width: 32px;
+  }
+
   .dock-nav {
     bottom: calc(16px + env(safe-area-inset-bottom));
     gap: 4px;
@@ -855,24 +1047,24 @@ section {
     width: 16px;
     height: 16px;
   }
+
+  footer {
+    padding: 32px 24px calc(90px + env(safe-area-inset-bottom));
+  }
 }
 
-/* =========================================================
-   FOOTER
-========================================================= */
+
 footer {
   margin-top: auto;
   text-align: center;
-  padding: 40px 24px;
+  padding: 40px 24px 110px;
   color: rgba(255,255,255,0.3);
   font-size: 13px;
   position: relative;
   z-index: 2;
 }
 
-/* =========================================================
-   STATS REVEAL ANIMATION
-========================================================= */
+
 .stat {
   display: flex;
   flex-direction: column;
@@ -885,8 +1077,7 @@ footer {
 }
 
 .stat.show {
-  /* opacity: 1;
-     transform: translateY(0); */
+
   animation: statPop .7s cubic-bezier(.2,1.2,.3,1) forwards;
 }
 
@@ -904,9 +1095,7 @@ footer {
   }
 }
 
-/* =========================================================
-   RESPONSIVE — LAPTOP
-========================================================= */
+
 @media (max-width: 1279px) {
   .hero h1 { font-size: clamp(30px, 3.6vw, 42px); }
   .hero .subtitle { font-size: clamp(15px, 1.5vw, 18px); }
@@ -924,9 +1113,7 @@ footer {
   .work-tags { font-size: clamp(11px, 1.2vw, 14px); }
 }
 
-/* =========================================================
-   RESPONSIVE — TABLET
-========================================================= */
+
 @media (max-width: 1023px) {
   .stats { grid-template-columns: repeat(2, 1fr); row-gap: 40px; column-gap: 20px; }
   .stat:nth-child(1) { grid-column: 1; grid-row: 1; text-align: left; }
@@ -948,36 +1135,20 @@ footer {
   .tg-css { grid-column: 2; grid-row: 2; text-align: left; align-items: flex-start; }
 }
 
-/* =========================================================
-   RESPONSIVE — MOBILE
-   Values derived from the Figma mobile mockup
-   (iPhone 14/15 Pro frame, 393px reference width).
-   clamp() keeps things proportional across ~360–430px phones.
-========================================================= */
+
 @media (max-width: 640px) {
 
-  /* ---------- Watermarks ----------
-     Font-size/line-height/box-width ratios below are taken from the
-     Figma mobile mockup (÷ frame width 393px, expressed as vw). At
-     that size a single line can't fit mobile screens, so — same as
-     the mockup — the box is made wider than the viewport and
-     word-break:break-word wraps the word onto multiple lines
-     naturally instead of us hardcoding <br> tags.
-     Centering stays on the standard left:50%/translateX(-50%) from
-     the base .watermark rule (inherited, not overridden here) —
-     the scroll-parallax script always re-applies that -50% on every
-     scroll, so a custom left/transform here would get clobbered the
-     moment the page scrolls. */
 
-  .wm-lukomskiy {
-    display: none; /* not present in the mobile mockup */
+
+  .wm-lukomskiy,
+  .wm-tools,
+  .wm-contact {
+    display: none;
   }
 
   .wm-mike,
   .wm-about,
-  .wm-tools,
-  .wm-work,
-  .wm-contact {
+  .wm-work {
     display: block;
     white-space: normal;
     word-break: break-word;
@@ -999,13 +1170,6 @@ footer {
     line-height: 1;
   }
 
-  .wm-tools {
-    top: 6vw;
-    width: 147vw;
-    font-size: 86.2vw;
-    line-height: 1;
-  }
-
   .wm-work {
     top: 8vw;
     width: 147vw;
@@ -1013,14 +1177,7 @@ footer {
     line-height: 1;
   }
 
-  .wm-contact {
-    top: 6vw;
-    width: 147vw;
-    font-size: 86.2vw;
-    line-height: 1;
-  }
 
-  /* ---------- Hero ---------- */
   .hero {
     padding: 96px 24px 64px;
     min-height: 100svh;
@@ -1062,7 +1219,7 @@ footer {
   }
 
 
-  /* ---------- About ---------- */
+
   .about {
     padding-top: 56px;
     padding-bottom: 64px;
@@ -1084,11 +1241,7 @@ footer {
     margin-top: 44px;
   }
 
-  /* Reproduce the mockup's alternating left/right reading order:
-     6+ (left) → 20+ (right) → 50+ (left) → 100% (right).
-     grid-row must be reset to auto — otherwise the tablet
-     breakpoint's grid-row:1/2 values leak in and stack two
-     stats on top of each other in the single mobile column. */
+
   .stat:nth-child(1) { grid-column: 1; grid-row: auto; order: 1; text-align: left; align-items: flex-start; }
   .stat:nth-child(3) { grid-column: 1; grid-row: auto; order: 2; text-align: right; align-items: flex-end; }
   .stat:nth-child(4) { grid-column: 1; grid-row: auto; order: 3; text-align: left; align-items: flex-start; }
@@ -1102,15 +1255,12 @@ footer {
     font-size: 14px;
   }
 
-  /* ---------- Philosophy ---------- */
+
   .philosophy {
     padding: 60px 0;
   }
 
-  /* Pair each heading with its own paragraph (heading → text → heading → text)
-     instead of the desktop order (both headings, then both paragraphs).
-     display:contents lifts the h2/p up to be direct flex children of
-     .container, so `order` can interleave them without touching the HTML. */
+
   .philosophy .container {
     display: flex;
     flex-direction: column;
@@ -1147,7 +1297,7 @@ footer {
     max-width: none;
   }
 
-  /* ---------- Tools ---------- */
+
   .tools {
     padding-top: 60px;
     padding-bottom: 72px;
@@ -1167,8 +1317,7 @@ footer {
     text-align: left;
   }
 
-  /* Mockup order/alignment: Figma (left) → HTML (right) →
-     JavaScript (left) → Illustrator (right) → CSS (left) */
+
   .tg-figma {
     grid-column: 1;
     grid-row: auto;
@@ -1230,7 +1379,7 @@ footer {
     font-size: 14px;
   }
 
-  /* ---------- Work ---------- */
+
   .work {
     padding-top: 60px;
     padding-bottom: 40px;
@@ -1276,7 +1425,7 @@ footer {
     display: none;
   }
 
-  /* ---------- Contact ---------- */
+ 
   .contact-block {
     padding: 56px 0 72px;
     text-align: left;
@@ -1307,12 +1456,7 @@ footer {
   }
 }
 
-/* =========================================================
-   TOUCH DEVICES
-   No physical cursor to track, and the parallax/cursor JS
-   below skips itself on coarse pointers — this just makes
-   sure the native cursor/tap state looks right either way.
-========================================================= */
+
 @media (hover: none) and (pointer: coarse) {
   body {
     cursor: auto;
@@ -1323,25 +1467,18 @@ footer {
   }
 }
 
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition: none !important; }
 }
 
-/* =========================================================
-   FOCUS VISIBILITY
-========================================================= */
+
 button:focus-visible {
   outline: 2px solid var(--pink);
   outline-offset: 3px;
 }
 
-/* =========================================================
-   HERO INTRO ANIMATION
-========================================================= */
+
 .hero .content > * {
   opacity: 0;
   transform: translateY(30px);
