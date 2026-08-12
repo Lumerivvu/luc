@@ -18,6 +18,8 @@ html {
   scroll-behavior: auto;
   overflow-x: hidden;
   touch-action: pan-y;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
 
 body {
@@ -543,13 +545,6 @@ section {
 .tool-group .title.pink { color: var(--pink); }
 .tool-group .title.white { color: #fff; }
 
-.tg-figma { grid-column: 1; text-align: left; align-items: flex-start; }
-.tg-js { grid-column: 3; text-align: center; align-items: center; }
-.tg-illustrator { grid-column: 5; text-align: right; align-items: flex-end; }
-.tg-html { grid-column: 2; text-align: left; align-items: flex-start; }
-.tg-css { grid-column: 4; text-align: right; align-items: flex-end; }
-
-
 .tg-figma {
   grid-column: 1;
   align-items: flex-start;
@@ -832,11 +827,6 @@ footer {
    movement) doesn't read as a mismatched stripe against the
    black background.
 ========================================================= */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
-}
-
 ::-webkit-scrollbar {
   width: 10px;
 }

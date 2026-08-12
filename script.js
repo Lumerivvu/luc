@@ -69,21 +69,21 @@ if (!isTouchDevice) {
     }
   }, { passive: true });
 
-  const hoverItems = document.querySelectorAll("a, button");
-
-  hoverItems.forEach(item => {
-    item.addEventListener("mouseenter", () => {
+  document.addEventListener("mouseover", (e) => {
+    if (e.target.closest("a, button")) {
       cursorEl.style.width = "28px";
       cursorEl.style.height = "28px";
       cursorEl.style.borderColor = "#ff0055";
-    });
+    }
+  }, { passive: true });
 
-    item.addEventListener("mouseleave", () => {
+  document.addEventListener("mouseout", (e) => {
+    if (e.target.closest("a, button") && !e.relatedTarget?.closest("a, button")) {
       cursorEl.style.width = "18px";
       cursorEl.style.height = "18px";
       cursorEl.style.borderColor = "rgba(255,255,255,.6)";
-    });
-  });
+    }
+  }, { passive: true });
 }
 
 function updateCursor() {
