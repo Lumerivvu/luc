@@ -81,7 +81,6 @@
       <div class="container">
         <div class="phil-headings">
           <h2 class="left"><span class="pink">Design </span>Philosophy</h2>
-          <!--<h2 class="right">FUNCTIONAL <span class="pink">DESIGN</span></h2>-->
           <h2 class="right">
             <span class="line1">Functional</span>
             <span class="line2 pink">Design</span>
@@ -294,6 +293,54 @@ clarity, usability and modern visual design.
       <span class="key-hint-num" id="keyHintNum">1</span>
     </div>
     <span class="key-hint-label" id="keyHintLabel">Hold to jump to Home</span>
+  </div>
+
+  <div class="modal-overlay" id="contactOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+      <button class="modal-close" id="contactClose" aria-label="Close">
+        <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <h3 id="contactModalTitle">Let's work together.</h3>
+      <p class="modal-subtitle">Tell me a bit about your project and I'll get back to you shortly.</p>
+
+      <form id="contactForm" action="https://formsubmit.co/ajax/mikefreelwork@gmail.com" method="POST">
+        <input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="_subject" value="New project inquiry from LMPage">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+
+        <div class="form-field">
+          <label for="cf-name">Name</label>
+          <input type="text" id="cf-name" name="Name" placeholder="Your name" required>
+        </div>
+
+        <div class="form-field">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="Email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="form-field">
+          <label for="cf-type">Project type</label>
+          <select id="cf-type" name="Project type">
+            <option value="UI/UX Design">UI/UX Design</option>
+            <option value="Web Design">Web Design</option>
+            <option value="Branding">Branding</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="cf-message">Project goal</label>
+          <textarea id="cf-message" name="Message" placeholder="What are you looking to build?" required></textarea>
+        </div>
+
+        <button type="submit" class="form-submit" id="contactSubmit">Send message</button>
+        <p class="form-status" id="contactStatus"></p>
+      </form>
+    </div>
   </div>
 
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>

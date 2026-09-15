@@ -7,7 +7,6 @@
   --container-pad: 24px;
 }
 
-
 * {
   margin: 0;
   padding: 0;
@@ -31,14 +30,10 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  min-width: 320px; 
+  min-width: 320px;
   cursor: none;
 }
 
-/* Fades the oversized watermark text as it bleeds toward the viewport
-   edges, so it tapers into the background instead of hard-cutting
-   right where the scrollbar sits (which reads as a stray stripe). Sits
-   above the watermarks (z-index 0) but below real content (z-index 2). */
 body::before,
 body::after {
   content: '';
@@ -85,14 +80,12 @@ section {
   position: relative;
 }
 
-
 .container {
   position: relative;
   z-index: 2;
   width: min(var(--container-max), 100% - (var(--container-pad) * 2));
   margin: 0 auto;
 }
-
 
 .watermark {
   position: absolute;
@@ -143,11 +136,10 @@ section {
     color: transparent;
 }
 
-
 .wm-about {
   top: 25vw;
   font-size: 32.442vw;
-  /* background: linear-gradient(180deg, rgba(0,0,0,0.14) 20%, rgba(255,0,85,0.16) 52%, rgba(0,0,0,0.14) 90%); */
+
   background: linear-gradient(185deg, rgba(255,255,255,0.07) 35%, rgba(0,0,0,0.07) 90%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -171,7 +163,6 @@ section {
   background-clip: text;
   color: transparent;
 }
-
 
 .hero {
   min-height: 100vh;
@@ -225,8 +216,6 @@ section {
   margin-bottom: 2.7vw;
   font-weight: 400;
 }
-
-
 
 .btn-contact {
   position: relative;
@@ -285,7 +274,6 @@ section {
   width: 13px;
   height: 13px;
 }
-
 
 .about {
   padding-top: 1vw;
@@ -353,7 +341,6 @@ section {
 .stat:nth-child(2) { grid-column: 4; text-align: right; }
 .stat:nth-child(3) { grid-column: 2; text-align: left; }
 .stat:nth-child(4) { grid-column: 3; text-align: right; }
-
 
 .philosophy {
   padding: 10vw 0;
@@ -471,7 +458,6 @@ section {
   text-align: justify;
 }
 
-
 .tools {
   padding-top: 10vw;
   padding-bottom: 12vw;
@@ -580,7 +566,6 @@ section {
   margin-top: 0;
 }
 
-
 .work {
   padding-top: 10vw;
   padding-bottom: 10vw;
@@ -668,7 +653,6 @@ section {
 .work-item:hover .work-name {
   color: var(--pink);
 }
-
 
 .work-tags {
   font-size: 1vw;
@@ -793,14 +777,6 @@ section {
   color: #ffffff;
 }
 
-/* =========================================================
-   NON-SELECTABLE TEXT
-   Headings, labels, and other UI "chrome" don't need to be
-   text-selectable — leaving them selectable just invites
-   accidental highlighting on click-drag and looks less
-   polished. Actual copy (paragraphs, phone/email you'd want
-   to copy) is intentionally left out of this list.
-========================================================= */
 h1, h2,
 .subtitle,
 .stat .num,
@@ -820,13 +796,6 @@ footer {
   user-select: none;
 }
 
-/* =========================================================
-   SCROLLBAR
-   Styled to match the dark theme so the browser's native
-   scrollbar (some OS/browser combos auto-show it on mouse
-   movement) doesn't read as a mismatched stripe against the
-   black background.
-========================================================= */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -846,7 +815,6 @@ footer {
   background: rgba(255, 0, 85, 0.5);
   background-clip: padding-box;
 }
-
 
 .dock-nav {
   position: fixed;
@@ -914,9 +882,6 @@ footer {
   box-shadow: 0 0 16px rgba(255, 0, 85, .45);
 }
 
-/* =========================================================
-   KEY HINT (hold 1-6 to jump to a section)
-========================================================= */
 .key-hint {
   position: fixed;
   top: 50%;
@@ -1043,7 +1008,6 @@ footer {
   }
 }
 
-
 footer {
   margin-top: auto;
   text-align: center;
@@ -1053,7 +1017,6 @@ footer {
   position: relative;
   z-index: 2;
 }
-
 
 .stat {
   display: flex;
@@ -1085,7 +1048,6 @@ footer {
   }
 }
 
-
 @media (max-width: 1279px) {
   .hero h1 { font-size: clamp(30px, 3.6vw, 42px); }
   .hero .subtitle { font-size: clamp(15px, 1.5vw, 18px); }
@@ -1102,7 +1064,6 @@ footer {
   .work-index { font-size: clamp(11px, 1.2vw, 14px); width: 32px; }
   .work-tags { font-size: clamp(11px, 1.2vw, 14px); }
 }
-
 
 @media (max-width: 1023px) {
   .stats { grid-template-columns: repeat(2, 1fr); row-gap: 40px; column-gap: 20px; }
@@ -1125,10 +1086,7 @@ footer {
   .tg-css { grid-column: 2; grid-row: 2; text-align: left; align-items: flex-start; }
 }
 
-
 @media (max-width: 640px) {
-
-
 
   .wm-lukomskiy,
   .wm-tools,
@@ -1166,7 +1124,6 @@ footer {
     font-size: 86.2vw;
     line-height: 1;
   }
-
 
   .hero {
     padding: 96px 24px 64px;
@@ -1208,8 +1165,6 @@ footer {
     height: 12px;
   }
 
-
-
   .about {
     padding-top: 56px;
     padding-bottom: 64px;
@@ -1231,7 +1186,6 @@ footer {
     margin-top: 44px;
   }
 
-
   .stat:nth-child(1) { grid-column: 1; grid-row: auto; order: 1; text-align: left; align-items: flex-start; }
   .stat:nth-child(3) { grid-column: 1; grid-row: auto; order: 2; text-align: right; align-items: flex-end; }
   .stat:nth-child(4) { grid-column: 1; grid-row: auto; order: 3; text-align: left; align-items: flex-start; }
@@ -1245,11 +1199,9 @@ footer {
     font-size: 14px;
   }
 
-
   .philosophy {
     padding: 60px 0;
   }
-
 
   .philosophy .container {
     display: flex;
@@ -1287,7 +1239,6 @@ footer {
     max-width: none;
   }
 
-
   .tools {
     padding-top: 60px;
     padding-bottom: 72px;
@@ -1306,7 +1257,6 @@ footer {
     row-gap: 32px;
     text-align: left;
   }
-
 
   .tg-figma {
     grid-column: 1;
@@ -1369,7 +1319,6 @@ footer {
     font-size: 14px;
   }
 
-
   .work {
     padding-top: 60px;
     padding-bottom: 40px;
@@ -1415,7 +1364,7 @@ footer {
     display: none;
   }
 
- 
+
   .contact-block {
     padding: 56px 0 72px;
     text-align: left;
@@ -1446,7 +1395,6 @@ footer {
   }
 }
 
-
 @media (hover: none) and (pointer: coarse) {
   body {
     cursor: auto;
@@ -1462,12 +1410,10 @@ footer {
   * { transition: none !important; }
 }
 
-
 button:focus-visible {
   outline: 2px solid var(--pink);
   outline-offset: 3px;
 }
-
 
 .hero .content > * {
   opacity: 0;
@@ -1516,5 +1462,204 @@ button:focus-visible {
   }
   to {
     opacity: 1;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s ease, visibility 0s linear .35s;
+}
+
+.modal-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .35s ease, visibility 0s linear 0s;
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 40px;
+  background: rgba(15, 15, 15, 0.7);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform: translateY(24px) scale(.97);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+}
+
+.modal-overlay.visible .modal {
+  transform: translateY(0) scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  transition: background .25s ease, color .25s ease, transform .25s ease;
+}
+
+.modal-close:hover {
+  background: var(--pink);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+.modal-close svg {
+  width: 14px;
+  height: 14px;
+}
+
+.modal h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.modal-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+
+.form-field {
+  margin-bottom: 18px;
+}
+
+.form-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: auto;
+  transition: border-color .25s ease, background .25s ease;
+}
+
+.form-field select {
+  cursor: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3 5l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.form-field select option {
+  background: #111;
+  color: #fff;
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--pink);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.form-honey {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form-submit {
+  width: 100%;
+  height: 48px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 50px;
+  background: #fff;
+  color: #000;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: none;
+  transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, background .3s ease;
+}
+
+.form-submit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(255, 0, 85, 0.3);
+}
+
+.form-submit:disabled {
+  opacity: .6;
+  transform: none;
+  box-shadow: none;
+}
+
+.form-status {
+  margin-top: 14px;
+  font-size: 13px;
+  text-align: center;
+  min-height: 18px;
+}
+
+.form-status.success { color: #3ddc84; }
+.form-status.error { color: var(--pink); }
+
+@media (max-width: 640px) {
+  .modal {
+    padding: 28px 24px;
+    border-radius: 20px;
+  }
+
+  .modal h3 {
+    font-size: 21px;
   }
 }
