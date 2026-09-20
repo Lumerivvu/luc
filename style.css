@@ -1160,9 +1160,7 @@ footer {
   }
 
   .dock-nav {
-    bottom: calc(16px + env(safe-area-inset-bottom));
-    gap: 4px;
-    padding: 6px;
+    display: none;
   }
 
   .dock-link {
@@ -1176,7 +1174,7 @@ footer {
   }
 
   footer {
-    padding: 32px 24px calc(90px + env(safe-area-inset-bottom));
+    padding: 32px 24px calc(40px + env(safe-area-inset-bottom));
   }
 }
 
@@ -1891,6 +1889,11 @@ button:focus-visible {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  transition: opacity var(--theme-speed) ease;
+}
+
+[data-theme="light"] .wm-reviews {
+  opacity: .80;
 }
 
 .reviews {
@@ -1966,10 +1969,31 @@ button:focus-visible {
   display: flex;
   gap: 1.4vw;
   overflow-x: auto;
+  overflow-y: visible;
   scroll-snap-type: x mandatory;
+  padding-top: 14px;
+  margin-top: -14px;
   padding-bottom: .6vw;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  mask-image: linear-gradient(90deg, transparent 0, #000 48px, #000 calc(100% - 48px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 48px, #000 calc(100% - 48px), transparent 100%);
+  transition: mask-image .2s ease, -webkit-mask-image .2s ease;
+}
+
+.reviews-track.at-start {
+  mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 48px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 48px), transparent 100%);
+}
+
+.reviews-track.at-end {
+  mask-image: linear-gradient(90deg, transparent 0, #000 48px, #000 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 48px, #000 100%);
+}
+
+.reviews-track.at-start.at-end {
+  mask-image: none;
+  -webkit-mask-image: none;
 }
 
 .reviews-track::-webkit-scrollbar {
@@ -2301,7 +2325,10 @@ button:focus-visible {
   .reviews > .container > .heading-wrap { margin-bottom: 32px; }
   .reviews h2 { font-size: clamp(30px, 11vw, 40px); }
 
-  .reviews-track { gap: 14px; margin: 0 calc(var(--container-pad) * -1); padding: 0 var(--container-pad) 8px; }
+  .reviews-track { gap: 14px; margin: -14px calc(var(--container-pad) * -1) 0; padding: 14px var(--container-pad) 8px; mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%); }
+  .reviews-track.at-start { mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 24px), transparent 100%); -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 24px), transparent 100%); }
+  .reviews-track.at-end { mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 100%); }
+  .reviews-track.at-start.at-end { mask-image: none; -webkit-mask-image: none; }
   .review-card { flex: 0 0 82vw; padding: 24px; gap: 14px; }
   .review-quote-mark { font-size: 34px; }
   .review-text { font-size: 14px; }

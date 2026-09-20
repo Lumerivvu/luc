@@ -585,8 +585,12 @@ if (reviewsTrack && reviewsPrev && reviewsNext) {
 
   const updateReviewsNav = () => {
     const maxScroll = reviewsTrack.scrollWidth - reviewsTrack.clientWidth - 1;
-    reviewsPrev.disabled = reviewsTrack.scrollLeft <= 0;
-    reviewsNext.disabled = maxScroll <= 0 || reviewsTrack.scrollLeft >= maxScroll;
+    const atStart = reviewsTrack.scrollLeft <= 0;
+    const atEnd = maxScroll <= 0 || reviewsTrack.scrollLeft >= maxScroll;
+    reviewsPrev.disabled = atStart;
+    reviewsNext.disabled = atEnd;
+    reviewsTrack.classList.toggle("at-start", atStart);
+    reviewsTrack.classList.toggle("at-end", atEnd);
   };
 
   reviewsPrev.addEventListener("click", () => {
