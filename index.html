@@ -11,18 +11,87 @@
   <link rel="stylesheet" href="style.css">
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var wantsLight = saved
+          ? saved === 'light'
+          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches);
+        if (wantsLight) document.documentElement.setAttribute('data-theme', 'light');
+      } catch (e) {}
+
+      /* Opening animation: true = show once per browser tab session, false = on every load */
+      try {
+        var INTRO_ONCE_PER_SESSION = true;
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var introSeen = INTRO_ONCE_PER_SESSION && sessionStorage.getItem('introSeen');
+        if (!reduceMotion && !introSeen) {
+          document.documentElement.classList.add('preloading');
+          if (INTRO_ONCE_PER_SESSION) sessionStorage.setItem('introSeen', '1');
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          /* failsafe: never leave the visitor stuck on the intro */
+          setTimeout(function () {
+            document.documentElement.classList.remove('preloading');
+          }, 9000);
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
 <body>
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <div class="preloader-word">
+        <span class="pl-l"><span style="--i:0">L</span></span>
+        <span class="pl-l"><span style="--i:1">U</span></span>
+        <span class="pl-l"><span style="--i:2">K</span></span>
+        <span class="pl-l"><span style="--i:3">O</span></span>
+        <span class="pl-l"><span style="--i:4">M</span></span>
+        <span class="pl-l"><span style="--i:5">S</span></span>
+        <span class="pl-l"><span style="--i:6">K</span></span>
+        <span class="pl-l"><span style="--i:7">I</span></span>
+        <span class="pl-l"><span style="--i:8">Y</span></span>
+        <span class="pl-l pl-dot"><span style="--i:9">.</span></span>
+      </div>
+    </div>
+
+    <div class="preloader-meta">
+      <span class="preloader-role">UI/UX &amp; Web Designer</span>
+      <span class="preloader-count"><span id="preloaderNum">00</span><span class="pl-pct">%</span></span>
+    </div>
+
+    <div class="preloader-bar"><span id="preloaderBar"></span></div>
+  </div>
+
   <div class="cursor"></div>
+  <div class="spotlight" aria-hidden="true"></div>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme">
+    <svg class="icon-sun" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M10 1.5v2M10 16.5v2M18.5 10h-2M3.5 10h-2M15.6 4.4l-1.4 1.4M5.8 14.2l-1.4 1.4M15.6 15.6l-1.4-1.4M5.8 5.8L4.4 4.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17 11.5A7.5 7.5 0 1 1 8.5 3a6 6 0 0 0 8.5 8.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    </svg>
+  </button>
 
   <main>
 
     <section class="hero" id="hero">
+      <div class="hero-grid" aria-hidden="true"></div>
       <div class="wm-lukomskiy watermark">LUKOMSKIY</div>
       <div class="wm-mike watermark">MIKE</div>
 
       <div class="content">
+        <span class="availability-badge">
+          <span class="dot"></span>
+          Available for new projects
+        </span>
+
         <h1>Design That <span class="pink">Works.</span></h1>
 
         <p class="subtitle">
@@ -160,6 +229,68 @@
     </section>
 
 
+    <section class="reviews" id="reviews">
+      <div class="wm-reviews watermark">REVIEWS</div>
+
+      <div class="container">
+        <div class="heading-wrap">
+          <h2>Client <span class="pink">Reviews.</span></h2>
+        </div>
+
+        <div class="reviews-carousel">
+          <button class="review-nav prev" id="reviewsPrev" aria-label="Previous reviews">
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11 3L3 11M3 11V4.5M3 11H9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="reviews-track" id="reviewsTrack">
+            <div class="review-card">
+              <span class="review-quote-mark">&ldquo;</span>
+              <p class="review-text">Mike turned a vague idea into a clean, working interface in days. Communication was fast and every revision landed exactly right.</p>
+              <div class="review-author">
+                <span class="review-name">Olena K.</span>
+                <span class="review-role">Founder, Mentorix</span>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <span class="review-quote-mark">&ldquo;</span>
+              <p class="review-text">Great eye for detail and genuinely cares about usability, not just how things look. Our conversion rate improved after the redesign.</p>
+              <div class="review-author">
+                <span class="review-name">Daniel R.</span>
+                <span class="review-role">Product Lead, Volt</span>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <span class="review-quote-mark">&ldquo;</span>
+              <p class="review-text">Delivered a polished UI kit ahead of schedule and was proactive about flagging UX issues we hadn't even noticed ourselves.</p>
+              <div class="review-author">
+                <span class="review-name">Sofia M.</span>
+                <span class="review-role">CEO, Taskly</span>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <span class="review-quote-mark">&ldquo;</span>
+              <p class="review-text">Smooth process from wireframes to handoff. Our dev team said it was the cleanest, best-organized Figma file they'd worked from.</p>
+              <div class="review-author">
+                <span class="review-name">Artem V.</span>
+                <span class="review-role">Marketing Director, DAXLL</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="review-nav next" id="reviewsNext" aria-label="Next reviews">
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
     <section class="work" id="work">
       <div class="wm-work watermark">WORK</div>
 
@@ -179,7 +310,7 @@ clarity, usability and modern visual design.
             <span class="work-tags">UI/UX · Landing Page</span>
             <span class="work-arrow">
               <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </span>
           </a>
@@ -190,7 +321,7 @@ clarity, usability and modern visual design.
             <span class="work-tags">Mobile App · UI/UX</span>
             <span class="work-arrow">
               <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </span>
           </a>
@@ -201,7 +332,7 @@ clarity, usability and modern visual design.
             <span class="work-tags">Web Design · Branding</span>
             <span class="work-arrow">
               <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </span>
           </a>
@@ -212,7 +343,7 @@ clarity, usability and modern visual design.
             <span class="work-tags">Web Design · Marketing</span>
             <span class="work-arrow">
               <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </span>
           </a>
@@ -221,20 +352,100 @@ clarity, usability and modern visual design.
     </section>
 
 
+    <section class="faq" id="faq">
+      <div class="wm-faq watermark">FAQ</div>
+
+      <div class="container">
+        <div class="heading-wrap">
+          <h2>Frequently <span class="pink">Asked.</span></h2>
+        </div>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What's your usual process?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+              <p>Discovery call, then research and wireframes, followed by high-fidelity UI design in Figma, a revision round, and a clean handoff with specs and assets — or a full front-end build if that's part of the scope.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How long does a typical project take?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+              <p>A landing page usually takes 1–2 weeks. A full product design or multi-screen app can take 3–6 weeks depending on scope and revision rounds.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Do you work with clients outside Ukraine?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes — most of my clients are remote. We can communicate over email or Telegram and jump on a video call to align on any timezone.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Do you also build the front-end, or just design?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+              <p>Both. I design in Figma and can also hand-code the front-end in HTML, CSS and JavaScript, so the final build matches the design pixel for pixel.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do we get started?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+              <p>Send a message through the contact form or email with a short brief of your project and goals, and I'll reply with next steps and a rough estimate.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="contact-block" id="contact">
       <div class="wm-contact watermark">CONTACT</div>
       <div class="container">
         <h2>Let's <span class="pink">Talk.</span></h2>
 
         <div class="contact-list">
-          <a class="contact-item" href="tel:+380962693807">
-            <span class="contact-label">Phone</span>
-            <span class="contact-value">+38 (096) 269-38-07</span>
-          </a>
-          <a class="contact-item" href="mailto:mikefreelwork@gmail.com">
-            <span class="contact-label">Email</span>
-            <span class="contact-value">mikefreelwork@gmail.com</span>
-          </a>
+          <div class="contact-item contact-item-copy">
+            <a class="contact-link" href="tel:+380962693807">
+              <span class="contact-label">Phone</span>
+              <span class="contact-value">+38 (096) 269-38-07</span>
+            </a>
+            <button class="copy-btn" type="button" data-copy="+380962693807" aria-label="Copy phone number">
+              <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="6" y="6" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M4 10H3.5A1.5 1.5 0 0 1 2 8.5v-5A1.5 1.5 0 0 1 3.5 2h5A1.5 1.5 0 0 1 10 3.5V4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+              <span class="copy-tooltip">Copied!</span>
+            </button>
+          </div>
+          <div class="contact-item contact-item-copy">
+            <a class="contact-link" href="mailto:mikefreelwork@gmail.com">
+              <span class="contact-label">Email</span>
+              <span class="contact-value">mikefreelwork@gmail.com</span>
+            </a>
+            <button class="copy-btn" type="button" data-copy="mikefreelwork@gmail.com" aria-label="Copy email address">
+              <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="6" y="6" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M4 10H3.5A1.5 1.5 0 0 1 2 8.5v-5A1.5 1.5 0 0 1 3.5 2h5A1.5 1.5 0 0 1 10 3.5V4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+              <span class="copy-tooltip">Copied!</span>
+            </button>
+          </div>
           <a class="contact-item" href="https://www.behance.net/52c574d2" target="_blank" rel="noopener noreferrer">
             <span class="contact-label">Behance</span>
             <span class="contact-value">https://www.behance.net/52c574d2</span>
@@ -270,10 +481,22 @@ clarity, usability and modern visual design.
         <path d="M13.5 3.5a4 4 0 0 0-5.4 4.9L3 13.5 5 15.5l5.1-5.1a4 4 0 0 0 4.9-5.4l-2.6 2.6-2-2 2.6-2.6Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </a>
+    <a href="#reviews" class="dock-link" data-section="reviews" aria-label="Reviews">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 4h12v8H8.5L5 15.5V12H4V4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+    </a>
     <a href="#work" class="dock-link" data-section="work" aria-label="Work">
       <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="2.5" y="6.5" width="15" height="9.5" rx="2" stroke="currentColor" stroke-width="1.6"/>
         <path d="M7 6.5V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <a href="#faq" class="dock-link" data-section="faq" aria-label="FAQ">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="7.3" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M7.8 8a2.2 2.2 0 1 1 3.1 2c-.7.4-1 .8-1 1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="10" cy="14.2" r=".9" fill="currentColor"/>
       </svg>
     </a>
     <a href="#contact" class="dock-link" data-section="contact" aria-label="Contact">
@@ -294,6 +517,12 @@ clarity, usability and modern visual design.
     </div>
     <span class="key-hint-label" id="keyHintLabel">Hold to jump to Home</span>
   </div>
+
+  <button class="to-top-btn" id="toTopBtn" aria-label="Back to top">
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 
   <div class="modal-overlay" id="contactOverlay">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
