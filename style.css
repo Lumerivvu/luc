@@ -255,8 +255,8 @@ section {
   background: var(--pink);
   transform: rotate(45deg);
   box-shadow:
-    0 0 12px rgba(255,0,85,.5),
-    0 0 24px rgba(255,0,85,.25);
+    0 0 6px rgba(255,0,85,.25),
+    0 0 12px rgba(255,0,85,.12);
 }
 
 .hero {
@@ -342,8 +342,8 @@ section {
 .btn-contact:hover {
   transform: translateY(-6px) scale(1.06);
   box-shadow:
-    0 0 18px rgba(255,255,255,.08),
-    0 14px 34px rgba(255,0,85,0.3);
+    0 0 10px rgba(255,255,255,.05),
+    0 8px 18px rgba(255,0,85,0.15);
 }
 
 .btn-contact:active {
@@ -604,17 +604,11 @@ section {
   will-change: transform;
   transition:
     transform .3s cubic-bezier(.2,.8,.2,1),
-    filter .35s,
-    box-shadow .3s ease;
+    filter .35s;
 }
 
 .tool-group:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px var(--shadow-soft);
-}
-
-[data-theme="light"] .tool-group:hover {
-  box-shadow: none;
 }
 
 .tool-group:hover .title {
@@ -1754,7 +1748,7 @@ button:focus-visible {
   color: var(--glass-text);
   font-family: inherit;
   font-size: 14px;
-  cursor: auto;
+  cursor: none;
   transition: border-color .25s ease, background .25s ease, color var(--theme-speed) ease;
 }
 
@@ -2388,6 +2382,51 @@ button:focus-visible {
 .theme-toggle:hover {
   border-color: var(--pink);
   transform: translateY(-3px);
+}
+
+.lang-toggle {
+  position: fixed;
+  top: 24px;
+  right: 86px;
+  z-index: 210;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--glass-text);
+  cursor: none;
+  box-shadow: 0 10px 30px var(--shadow);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background var(--theme-speed) ease,
+    border-color var(--theme-speed) ease,
+    box-shadow var(--theme-speed) ease,
+    color var(--theme-speed) ease,
+    transform .3s cubic-bezier(.2,.8,.2,1);
+}
+
+.lang-toggle:hover {
+  border-color: var(--pink);
+  transform: translateY(-3px);
+}
+
+@media (max-width: 640px) {
+  .lang-toggle {
+    top: calc(16px + env(safe-area-inset-top));
+    right: 66px;
+    width: 42px;
+    height: 42px;
+    font-size: 11px;
+  }
 }
 
 .theme-toggle svg {

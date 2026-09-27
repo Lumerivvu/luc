@@ -401,7 +401,11 @@ function isTypingContext() {
 
 function showKeyHint(key, sectionInfo) {
   keyHintNum.textContent = key;
-  keyHintLabel.textContent = `Hold to jump to ${sectionInfo.label}`;
+  const dict = translations[currentLang] || translations.en;
+  const navKey = sectionIdToNavKey[sectionInfo.id];
+  const sectionLabel = (navKey && dict[navKey] !== undefined) ? dict[navKey] : sectionInfo.label;
+  const template = dict.hold_to_jump || "Hold to jump to {section}";
+  keyHintLabel.textContent = template.replace("{section}", sectionLabel);
 
   keyHintRing.style.transition = "none";
   keyHintRing.style.strokeDashoffset = RING_CIRCUMFERENCE;
@@ -478,8 +482,10 @@ window.addEventListener("keydown", (e) => {
 contactForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  const dict = translations[currentLang] || translations.en;
+
   contactSubmit.disabled = true;
-  contactSubmit.textContent = "Sending...";
+  contactSubmit.textContent = dict.status_sending;
   contactStatus.textContent = "";
   contactStatus.className = "form-status";
 
@@ -492,16 +498,16 @@ contactForm.addEventListener("submit", async (e) => {
 
     if (!response.ok) throw new Error("Request failed");
 
-    contactStatus.textContent = "Message sent — thank you!";
+    contactStatus.textContent = dict.status_success;
     contactStatus.classList.add("success");
     contactForm.reset();
     setTimeout(closeContactModal, 1800);
   } catch (err) {
-    contactStatus.textContent = "Something went wrong. Please email me directly.";
+    contactStatus.textContent = dict.status_error;
     contactStatus.classList.add("error");
   } finally {
     contactSubmit.disabled = false;
-    contactSubmit.textContent = "Send message";
+    contactSubmit.textContent = dict.btn_send;
   }
 });
 
@@ -568,6 +574,288 @@ if (themeToggle) {
     setTheme(isLight ? "dark" : "light");
   });
 }
+
+/* ============ Localization (EN / UK) ============ */
+
+const translations = {
+  en: {
+    badge_available: "Available for new projects",
+    hero_title_pre: "Design That",
+    hero_title_pink: "Works.",
+    subtitle_role: "UI/UX & Web Designer",
+    subtitle_desc: "I design interfaces that people enjoy using.",
+    btn_contact: "Contact me",
+    aria_contact: "Contact me",
+
+    about_title_pre: "About",
+    about_title_pink: "Me.",
+    about_text: "I'm a UI/UX & Web Designer passionate about creating intuitive, functional, and visually engaging digital products. I transform ideas into user-centered experiences through research, wireframing, interface design, prototyping, and front-end development.",
+    stat_years: "Years Experience",
+    stat_satisfaction: "Client Satisfaction",
+    stat_projects: "Completed Projects",
+    stat_screens: "UI Screens Designed",
+
+    phil_left_pink: "Design ",
+    phil_left_rest: "Philosophy",
+    phil_right_line1: "Functional",
+    phil_right_line2: "Design",
+    phil_text_left: "Great design is more than aesthetics. I believe every interface should combine clarity, usability, and visual consistency, where every element has a purpose and every decision improves the overall user experience.",
+    phil_text_right: "Every successful digital product starts with understanding the people who will use it. I believe that great user experiences are built through research, empathy, and thoughtful problem-solving.",
+
+    tools_title: "Tools.",
+    figma_item1: "Wireframing",
+    figma_item2: "Responsive Design",
+    figma_item3: "Developer Handoff",
+    html_item1: "Semantic Markup",
+    html_item2: "Accessibility",
+    html_item3: "SEO Structure",
+    js_item1: "DOM Manipulation",
+    js_item2: "API Integration",
+    js_item3: "Interactive UI",
+    css_item1: "Responsive Layouts",
+    css_item2: "Flexbox",
+    css_item3: "Grid",
+    ai_item1: "Vector Graphics",
+    ai_item2: "Typography",
+    ai_item3: "Logos",
+
+    reviews_title_pre: "Client",
+    reviews_title_pink: "Reviews.",
+
+    work_title_pre: "Selected",
+    work_title_pink: "Work.",
+    work_subtitle: "A selection of websites and digital products focused on clarity, usability and modern visual design.",
+    work_tag1: "UI/UX · Landing Page",
+    work_tag2: "Mobile App · UI/UX",
+    work_tag3: "Web Design · Branding",
+    work_tag4: "Web Design · Marketing",
+
+    faq_title_pre: "Frequently",
+    faq_title_pink: "Asked.",
+    faq_q1: "What's your usual process?",
+    faq_a1: "Discovery call, then research and wireframes, followed by high-fidelity UI design in Figma, a revision round, and a clean handoff with specs and assets — or a full front-end build if that's part of the scope.",
+    faq_q2: "How long does a typical project take?",
+    faq_a2: "A landing page usually takes 1–2 weeks. A full product design or multi-screen app can take 3–6 weeks depending on scope and revision rounds.",
+    faq_q3: "Do you work with clients outside Ukraine?",
+    faq_a3: "Yes — most of my clients are remote. We can communicate over email or Telegram and jump on a video call to align on any timezone.",
+    faq_q4: "Do you also build the front-end, or just design?",
+    faq_a4: "Both. I design in Figma and can also hand-code the front-end in HTML, CSS and JavaScript, so the final build matches the design pixel for pixel.",
+    faq_q5: "How do we get started?",
+    faq_a5: "Send a message through the contact form or email with a short brief of your project and goals, and I'll reply with next steps and a rough estimate.",
+
+    contact_title_pre: "Let's",
+    contact_title_pink: "Talk.",
+    label_phone: "Phone",
+    label_email: "Email",
+    label_behance: "Behance",
+    copied_text: "Copied!",
+    aria_copy_phone: "Copy phone number",
+    aria_copy_email: "Copy email address",
+
+    footer_text: "© 2026 Lukomskiy — UI/UX & Web Designer",
+
+    nav_home: "Home",
+    nav_about: "About",
+    nav_philosophy: "Philosophy",
+    nav_tools: "Tools",
+    nav_reviews: "Reviews",
+    nav_work: "Work",
+    nav_faq: "FAQ",
+    nav_contact: "Contact",
+    hold_to_jump: "Hold to jump to {section}",
+
+    aria_to_top: "Back to top",
+    aria_close: "Close",
+    aria_theme_toggle: "Toggle light and dark theme",
+    aria_lang_toggle: "Switch to Ukrainian",
+    aria_reviews_prev: "Previous reviews",
+    aria_reviews_next: "Next reviews",
+
+    modal_title: "Let's work together.",
+    modal_subtitle: "Tell me a bit about your project and I'll get back to you shortly.",
+    label_name: "Name",
+    label_project_type: "Project type",
+    label_project_goal: "Project goal",
+    ph_name: "Your name",
+    ph_message: "What are you looking to build?",
+    opt_uiux: "UI/UX Design",
+    opt_webdesign: "Web Design",
+    opt_branding: "Branding",
+    opt_other: "Other",
+    btn_send: "Send message",
+    status_sending: "Sending...",
+    status_success: "Message sent — thank you!",
+    status_error: "Something went wrong. Please email me directly.",
+  },
+
+  uk: {
+    badge_available: "Готовий до нових проєктів",
+    hero_title_pre: "Дизайн, який",
+    hero_title_pink: "працює.",
+    subtitle_role: "UI/UX та Web дизайнер",
+    subtitle_desc: "Я створюю інтерфейси, якими приємно користуватися.",
+    btn_contact: "Зв'язатися",
+    aria_contact: "Зв'язатися зі мною",
+
+    about_title_pre: "Про",
+    about_title_pink: "мене.",
+    about_text: "Я UI/UX та Web дизайнер, який захоплюється створенням інтуїтивно зрозумілих, функціональних і візуально привабливих цифрових продуктів. Я перетворюю ідеї на орієнтований на користувача досвід через дослідження, вайрфреймінг, дизайн інтерфейсів, прототипування та front-end розробку.",
+    stat_years: "Років досвіду",
+    stat_satisfaction: "Задоволеність клієнтів",
+    stat_projects: "Завершених проєктів",
+    stat_screens: "Розроблених UI-екранів",
+
+    phil_left_pink: "Дизайн ",
+    phil_left_rest: "філософія",
+    phil_right_line1: "Функціональний",
+    phil_right_line2: "дизайн",
+    phil_text_left: "Гарний дизайн — це більше, ніж естетика. Я вважаю, що кожен інтерфейс повинен поєднувати ясність, зручність використання та візуальну послідовність, де кожен елемент має мету, а кожне рішення покращує загальний досвід користувача.",
+    phil_text_right: "Кожен успішний цифровий продукт починається з розуміння людей, які будуть ним користуватися. Я вважаю, що чудовий користувацький досвід будується через дослідження, емпатію та вдумливе вирішення проблем.",
+
+    tools_title: "Інструменти.",
+    figma_item1: "Вайрфреймінг",
+    figma_item2: "Адаптивний дизайн",
+    figma_item3: "Передача розробникам",
+    html_item1: "Семантична розмітка",
+    html_item2: "Доступність",
+    html_item3: "SEO-структура",
+    js_item1: "Робота з DOM",
+    js_item2: "Інтеграція API",
+    js_item3: "Інтерактивний UI",
+    css_item1: "Адаптивна верстка",
+    css_item2: "Flexbox",
+    css_item3: "Grid",
+    ai_item1: "Векторна графіка",
+    ai_item2: "Типографіка",
+    ai_item3: "Логотипи",
+
+    reviews_title_pre: "Відгуки",
+    reviews_title_pink: "клієнтів.",
+
+    work_title_pre: "Вибрані",
+    work_title_pink: "роботи.",
+    work_subtitle: "Добірка вебсайтів та цифрових продуктів, орієнтованих на ясність, зручність використання та сучасний візуальний дизайн.",
+    work_tag1: "UI/UX · Лендінг",
+    work_tag2: "Мобільний застосунок · UI/UX",
+    work_tag3: "Веб-дизайн · Брендинг",
+    work_tag4: "Веб-дизайн · Маркетинг",
+
+    faq_title_pre: "Часті",
+    faq_title_pink: "запитання.",
+    faq_q1: "Який ваш звичайний процес роботи?",
+    faq_a1: "Спочатку вступний дзвінок, потім дослідження та вайрфрейми, далі детальний UI-дизайн у Figma, раунд правок і чітка передача зі специфікаціями та ассетами — або повна front-end розробка, якщо це входить у обсяг робіт.",
+    faq_q2: "Скільки часу займає типовий проєкт?",
+    faq_a2: "Лендінг зазвичай займає 1–2 тижні. Повний дизайн продукту або багатоекранний застосунок може зайняти 3–6 тижнів залежно від обсягу та кількості раундів правок.",
+    faq_q3: "Ви працюєте з клієнтами за межами України?",
+    faq_a3: "Так — більшість моїх клієнтів працюють віддалено. Ми можемо спілкуватися електронною поштою або в Telegram і організувати відеодзвінок у будь-якому часовому поясі.",
+    faq_q4: "Ви також верстаєте front-end, чи лише проєктуєте дизайн?",
+    faq_a4: "І те, і інше. Я проєктую дизайн у Figma, а також можу власноруч зверстати front-end на HTML, CSS та JavaScript, тож фінальний результат точно відповідає дизайну пікселем у піксель.",
+    faq_q5: "З чого почати співпрацю?",
+    faq_a5: "Напишіть мені через контактну форму або на пошту короткий бриф вашого проєкту і цілей, і я відповім з наступними кроками та орієнтовною оцінкою.",
+
+    contact_title_pre: "Давайте",
+    contact_title_pink: "поговоримо.",
+    label_phone: "Телефон",
+    label_email: "Пошта",
+    label_behance: "Behance",
+    copied_text: "Скопійовано!",
+    aria_copy_phone: "Скопіювати номер телефону",
+    aria_copy_email: "Скопіювати електронну адресу",
+
+    footer_text: "© 2026 Lukomskiy — UI/UX та Web дизайнер",
+
+    nav_home: "Головна",
+    nav_about: "Про мене",
+    nav_philosophy: "Філософія",
+    nav_tools: "Інструменти",
+    nav_reviews: "Відгуки",
+    nav_work: "Роботи",
+    nav_faq: "Питання",
+    nav_contact: "Контакти",
+    hold_to_jump: "Утримуйте, щоб перейти до: {section}",
+
+    aria_to_top: "Нагору",
+    aria_close: "Закрити",
+    aria_theme_toggle: "Перемкнути світлу і темну тему",
+    aria_lang_toggle: "Перемкнути на англійську",
+    aria_reviews_prev: "Попередні відгуки",
+    aria_reviews_next: "Наступні відгуки",
+
+    modal_title: "Працюймо разом.",
+    modal_subtitle: "Розкажіть трохи про свій проєкт, і я незабаром з вами зв'яжуся.",
+    label_name: "Ім'я",
+    label_project_type: "Тип проєкту",
+    label_project_goal: "Мета проєкту",
+    ph_name: "Ваше ім'я",
+    ph_message: "Що б ви хотіли створити?",
+    opt_uiux: "UI/UX дизайн",
+    opt_webdesign: "Веб-дизайн",
+    opt_branding: "Брендинг",
+    opt_other: "Інше",
+    btn_send: "Надіслати повідомлення",
+    status_sending: "Надсилання...",
+    status_success: "Повідомлення надіслано — дякую!",
+    status_error: "Щось пішло не так. Будь ласка, напишіть мені на пошту напряму.",
+  },
+};
+
+const sectionIdToNavKey = {
+  hero: "nav_home",
+  about: "nav_about",
+  philosophy: "nav_philosophy",
+  tools: "nav_tools",
+  reviews: "nav_reviews",
+  work: "nav_work",
+  faq: "nav_faq",
+  contact: "nav_contact",
+};
+
+const langToggle = document.getElementById("langToggle");
+let currentLang = "en";
+
+function applyTranslations(lang) {
+  const dict = translations[lang] || translations.en;
+
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (dict[key] !== undefined) el.setAttribute("placeholder", dict[key]);
+  });
+
+  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-aria");
+    if (dict[key] !== undefined) el.setAttribute("aria-label", dict[key]);
+  });
+
+  if (langToggle) langToggle.textContent = lang === "uk" ? "EN" : "UA";
+  document.documentElement.setAttribute("lang", lang === "uk" ? "uk" : "en");
+}
+
+function setLang(lang) {
+  currentLang = lang === "uk" ? "uk" : "en";
+  applyTranslations(currentLang);
+  try {
+    localStorage.setItem("lang", currentLang);
+  } catch (err) {}
+}
+
+if (langToggle) {
+  langToggle.addEventListener("click", () => {
+    setLang(currentLang === "uk" ? "en" : "uk");
+  });
+}
+
+(function initLang() {
+  let savedLang = null;
+  try {
+    savedLang = localStorage.getItem("lang");
+  } catch (err) {}
+  setLang(savedLang === "uk" ? "uk" : "en");
+})();
 
 /* ============ Reviews carousel arrows ============ */
 
